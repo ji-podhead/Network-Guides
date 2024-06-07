@@ -10,6 +10,113 @@
 > - this Guide will also cover how to debug and test your DNS
 > - last but least we will learn why DNS is a potential attack vector, how snooping works and what DNS-poisining is
 
+---
+
+## Records
+
+ DNS records are essential for defining how domain names are translated into IP addresses. 
+ 
+ Some common types of DNS records include:
+  
+| ***Record***  | ***Description*** |
+|---------------|-------------------|
+|    A Record | Maps a domain name to an IPv4 address. |
+|   AAAA Record | Maps a domain name to an IPv6 address. |
+|    CNAME Record | Alias one name to another. |
+|    MX Record  | Specifies the mail server responsible for accepting email on behalf of a domain. |
+|    TXT Record | Allows you to insert arbitrary text into the DNS record. |
+|    PTR Record | Used in reverse DNS lookup to associate an IP address with a hostname. |
+
+---
+
+## Access Control Lists (ACLs)
+
+Access Control Lists (ACLs) in DNS are used to control who can perform certain actions on your DNS server. They allow you to specify which IP addresses or networks are allowed or denied access to various operations such as dynamic updates, zone transfers, and queries.
+
+An ACL is defined in the DNS server's configuration file and consists of a list of IP addresses or ranges, followed by an action (permit or deny). Here's an example of an ACL definition:
+>```
+>...
+>acl local-lan {
+>  localhost;
+>  192.168.1.0/24;
+>  192.168.122.0/24; # Netzwork for vmbr0
+>  192.168.123.0/24; # additional Networks 
+>};
+>  allow-query { local-lan; };
+>```
+> In this example, only the IP addresses within the `192.168.1.0/24`,`192.168.122.0/24` and `192.168.123.0/24` ranges are permitted to perform queries against the DNS server. 
+
+---
+## Forward Zones
+Forward zones map domain names to IP addresses. They are the primary mechanism by which DNS servers respond to queries asking for the IP address associated with a given domain name.
+
+ The main goal of forward zones is to facilitate the translation of domain names into IP addresses, allowing users to connect to web servers, email servers, and other resources identified by domain names.
+
+Configuration: Forward zones are configured in the DNS server's configuration files, typically located in /etc/bind/named.conf.local for BIND9 servers. Each forward zone requires a zone declaration that includes the domain name and the location of the zone file containing the DNS records for that domain.
+
+***Example Configuration:***
+>```
+>zone "example.com" {
+>    type master;
+>    file "/etc/bind/db.example.com";
+>};
+
+---
+
+## Reverse Zones in DNS Configurations
+
+- Reverse zones in DNS configurations are used to map IP addresses back to domain names. This is particularly useful for reverse DNS lookups, where you know an IP address and want to find the associated domain name.
+
+- To configure reverse zones, you would typically add a zone block in your DNS server configuration file (named.conf for BIND). Here's an example of how to define a reverse zone:
+>```
+>zone "122.in-addr.arpa" IN {
+>    type master;
+>    file "/etc/bind/db.122";
+>};
+>```
+
+> This configuration tells the DNS server to manage the reverse zone for the subnet 122.0.0.0/24, mapping IP addresses within this range to domain names. The file directive points to the database file that contains the PTR records for this zone.
+> PTR records in the reverse zone database (db.122) would then map IP addresses back to domain names, allowing reverse DNS lookups to succeed.
+
+---
+
+
+## Differences from Reverse Zones
+While both forward and reverse zones play essential roles in DNS, they serve opposite functions:
+
+    Forward Zones: Translate domain names into IP addresses.
+    Reverse Zones: Map IP addresses back to domain names, facilitating reverse DNS lookups.
+
+In essence, forward zones are about translating names to numbers, whereas reverse zones translate numbers back to names. Both types of zones are critical for the proper functioning of the DNS system, ensuring that users can efficiently navigate the internet and internal networks.
+
+---
+
+
+## Clients in DNS Zones
+ Clients in DNS zones refer to devices or networks that initiate DNS queries to a DNS server. These queries seek information about domain names, and the DNS server responds based on its configured zone files.
+
+ The treatment of these queries can vary depending on the source network, utilizing views to serve different responses to LAN and WAN clients. 
+
+- The `allow-query` directive specifies which clients are permitted to send queries to the DNS server. 
+> - Setting allow-query { any; }; means that the DNS server accepts queries from any client, regardless of their IP address or network location.
+> -  This configuration is broad and permissive but might not be suitable for all environments, especially those requiring stricter access controls for security reasons.
+
+---
+
+***Alternative Configuration:*** Defining Specific Clients
+- Instead of using allow-query { any; };, you could define ***specific clients*** that are allowed to query the DNS server.
+> - This approach enhances security by limiting access to trusted clients. You can achieve this by specifying IP addresses, networks, or even creating named ACLs (Access Control Lists) that group certain clients together.
+
+Here's an example of how to define specific clients using IP addresses:
+
+>```acl internal { 192.168.1.0/24; 10.0.0.0/8; };
+>options { allow-query { internal; }; allow-transfer { none; }; };
+>```
+> - In this configuration, only the IP addresses within the 192.168.1.0/24 and 10.0.0.0/8 ranges are permitted to perform queries against the DNS server.
+> - This method provides a more controlled environment compared to allow-query { any; };.
+
+---
+
 ## Understanding DNS Query Output
 
 When querying a DNS server for domain name resolution, the response contains several sections that provide detailed information about the queried domain. 
@@ -24,21 +131,8 @@ Here's a breakdown of these sections based on the example output you provided:
 | **Authority Section** | Lists the authoritative nameservers for the queried domain.                                        |
 | **Additional Section** | Contains information that might be needed to resolve the query.                                 |
 
+---
 
-### Reverse Zones in DNS Configurations
-
-- Reverse zones in DNS configurations are used to map IP addresses back to domain names. This is particularly useful for reverse DNS lookups, where you know an IP address and want to find the associated domain name.
-
-- To configure reverse zones, you would typically add a zone block in your DNS server configuration file (named.conf for BIND). Here's an example of how to define a reverse zone:
->```
->zone "122.in-addr.arpa" IN {
->    type master;
->    file "/etc/bind/db.122";
->};
->```
-
-> This configuration tells the DNS server to manage the reverse zone for the subnet 122.0.0.0/24, mapping IP addresses within this range to domain names. The file directive points to the database file that contains the PTR records for this zone.
-> PTR records in the reverse zone database (db.122) would then map IP addresses back to domain names, allowing reverse DNS lookups to succeed.
 
 ## Preperation
 - ***on the machine that runs the dns:***
@@ -81,7 +175,7 @@ Here's a breakdown of these sections based on the example output you provided:
 >```
 > this file will be constantly get resetted by NetworkManager, so we will need to add our Ip again later, but i wanted to explain this before we start the actual DNS-installation 
 
-
+---
  
   ## Install Bind9
   ```Bash
@@ -93,6 +187,7 @@ Here's a breakdown of these sections based on the example output you provided:
 # systemctl enable bind9
 # sudo systemctl enable named
 ```
+---
 
 ## configure your DNS
 
@@ -233,11 +328,12 @@ Here's a breakdown of these sections based on the example output you provided:
 > ***DNS-Host:***
 > - journalctl, syslogs, cache
 > 
-> ***DNS-Client:***
+> ***DNS-Client debug:***
 > - wget, dig, telnet, tcdump
 
-### DNS-Client 
+---
 
+### DNS-Client debug
 
 ***wget:***
 
@@ -312,7 +408,7 @@ sudo tcpdump udp port 53 --interface virbr0 -vv
 
 ---
 
-### DNS-HOST
+### DNS-HOST debug
 ***tail the logs of your nameserver:***
 ```Bash
 journalctl -u named.service -f
@@ -331,6 +427,7 @@ journalctl -u named.service -f
 >|--------------|-------------------|
 >| ```Jun 07 16:44:16 my-proxmox named[413848]: client @0x751f62288d68 192.168.122.1#46572 (foreman.de): query: foreman.de IN A +E(0)K (192.168.122.7)``` | Successful DNS Lookup for `foreman.de` using `dig` command |
 
+---
 
 ## Security, Snooping & Spoofing
 ### Spoofing
@@ -369,3 +466,6 @@ dig +norecurse @192.168.122.7 foreman.de
 >;; MSG SIZE  rcvd: 147
  >```
 > now we know that `localhost` made a DNS-request for `foreman.de`
+
+---
+
