@@ -429,6 +429,15 @@ journalctl -u named.service -f
 
 ---
 
+***Dump the cache:***
+ - bind stores its cache in the ram, but you can dump it using 
+```Bash
+rndc dumpdb > named_dump.db
+```
+- you can also flush it using rndc
+
+---
+
 ## Security, Snooping & Spoofing
 ### Spoofing
 - we can get the ip's of the clients that that send DNS-requests to the server
