@@ -527,25 +527,18 @@ dig +norecurse @192.168.122.7 foreman.de
 ---
 
 
-> -   We construct a DNS query packet targeting `www.example.com`.
-> -   We then create a DNS response packet that includes our spoofed source IP (`src_ip`) and the actual destination IP (`dst_ip`). The response packet is crafted to mimic a legitimate DNS response for `www.example.com`, directing it to an IP address (`1.3.3.7`) of the attacker's choice.
-> -   Finally, we send the crafted DNS response packet towards the DNS server.
 
----
 
 ## DNS Cache-Poisining
+
  DNS cache poisoning, is a malicious activity where an attacker injects false DNS records into a DNS server's cache. 
 > - This manipulation tricks the DNS server into returning incorrect IP addresses for a domain name, redirecting users to malicious websites instead of legitimate ones.
 
 - Attackers often target DNS servers that are not properly secured or configured, leading to successful redirection of traffic.
 - there are 2 main tatics used:
-> 
->     - a ***denial of service attack*** such as DDOS can generate latency, or kill the spoofed server in order to take it over 
->     -  
-
-
 
 ***Sending a fake record using spoofed ip***
+
 - attack an additional nameserver in order to respond to the targeted nameserver with a correct ip, but also with a ***fake record***
    -  a ***denial of service attack*** such as DDOS can be used to kill the additional nameserver to spoof it
    - server got taken over by any other hack and gets controlled directly
@@ -577,8 +570,14 @@ send(response_packet_wiki)
 print("Sent DNS response packets.")
 
 ```
+> -   We construct a DNS query packet targeting `www.example.com`.
+> -   We then create a DNS response packet that includes our spoofed source IP (`src_ip`) and the actual destination IP (`dst_ip`). The response packet is crafted to mimic a legitimate DNS response for `www.example.com`, directing it to an IP address (`1.3.3.7`) of the attacker's choice.
+> -   Finally, we send the crafted DNS response packet towards the DNS server.
+
+---
 
 ***Sending a fake query by using IP-Spoofing***
+
 - we will attack the victim directly instead of using an additional nameserver
  - a ***denial of service attack*** such as DDOS could be used to kill the corresponding DNS 
 - the spoofed DNS sends a `fake query` directly to the victim 
@@ -654,6 +653,7 @@ print(f"DNS spoofing
 ## Protection
 
 ***Preventing DNS Cache Poisoning and DNS Spoofing***
+
 - ***Use of TSIG Authentication:*** Transaction SIGnature (TSIG) authentication adds a layer of security to DNS transactions by ensuring that DNS messages are authenticated and integrity-checked. This prevents attackers from injecting false DNS records into a DNS server's cache.
  -  ***Implement DNSSEC:*** DNS Security Extensions (DNSSEC) signs DNS data with digital signatures, ensuring that DNS responses cannot be tampered with. DNSSEC verifies the authenticity of DNS data, preventing attackers from successfully poisoning DNS caches.
  - ***Limit Zone Transfers:*** Limiting zone transfer requests can prevent attackers from obtaining copies of a DNS zone file, which they could then use to poison DNS caches.
@@ -661,6 +661,7 @@ print(f"DNS spoofing
 - ***Update DNS Software:*** Keeping DNS software up-to-date ensures that any known vulnerabilities are patched, reducing the risk of DNS cache poisoning attacks.
 
 ***Practical Example of DNS Cache Poisoning Prevention***
+
 Let's consider a scenario where you're setting up a DNS server using BIND9. To mitigate the risk of DNS cache poisoning, you should implement TSIG authentication for DNS transactions. Here's how you can configure TSIG authentication in BIND9:
 
 - Generate a Key: First, generate a shared secret key for TSIG authentication. 
@@ -673,6 +674,7 @@ Let's consider a scenario where you're setting up a DNS server using BIND9. To m
 > This command generates a pair of keys (`mykey.+165+000001.private`, `mykey.+165+000001.key`) and a key file (`Kmykey.+165+000001.key`) that you'll use for TSIG authentication.
 
    ***Configure TSIG Authentication in BIND9:***
+   
    >  Edit your named.conf file to include the generated key and configure TSIG authentication for your zone transfers and dynamic updates.
     
 ```
