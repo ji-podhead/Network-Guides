@@ -1,13 +1,50 @@
 # DNS
-> we will install our dns on Debian
-> - its a stable distro for networking
-> - its my proxmox-machine so i thought it would make sense not to outsource my dns and dhcp, since i use the proxmox machine for my networking and virtualisation stuff anyway.
-> 
+> - we will install our dns on Debian
+>   - its a stable distro for networking
+>   - its my proxmox-machine so i thought it would make sense not to outsource my dns and dhcp and i use the proxmox machine for my networking and virtualisation stuff anyway.
+> - ***DO NOT EXPOSE PORT 53 UNLESS YOU KNOW WHAT YOU ARE DOING AND HAVE PROPPER `ACL` CONFIGURED!***
+>   - this will probably flood your server with public DNS-request and might break it
+>     - to avoid unnecessary traffic, we  set `recursion no;` in `/etc/bind/named.conf.options`
+> - in our Example we use `dynamic  update` ***without configuring clients*** specifically since this is a private DNS
+>     -  hence we set `allow-query { any; };` in the zones we configure in `/etc/bind/named.conf.local`
+> - this Guide will also cover how to debug and test your DNS
+> - last but least we will learn why DNS is a potential attack vector, how snooping works and what DNS-poisining is
+
+## Understanding DNS Query Output
+
+When querying a DNS server for domain name resolution, the response contains several sections that provide detailed information about the queried domain. 
+
+Here's a breakdown of these sections based on the example output you provided:
+
+
+| **Section Title** | **Description**                                                                                     |
+|-------------------|-----------------------------------------------------------------------------------------------------|
+| **Question Section** | Specifies what information is being requested.                                                     |
+| **Answer Section** | Provides the actual DNS records that match the query.                                              |
+| **Authority Section** | Lists the authoritative nameservers for the queried domain.                                        |
+| **Additional Section** | Contains information that might be needed to resolve the query.                                 |
+
+
+### Reverse Zones in DNS Configurations
+
+- Reverse zones in DNS configurations are used to map IP addresses back to domain names. This is particularly useful for reverse DNS lookups, where you know an IP address and want to find the associated domain name.
+
+- To configure reverse zones, you would typically add a zone block in your DNS server configuration file (named.conf for BIND). Here's an example of how to define a reverse zone:
+>```
+>zone "122.in-addr.arpa" IN {
+>    type master;
+>    file "/etc/bind/db.122";
+>};
+>```
+
+> This configuration tells the DNS server to manage the reverse zone for the subnet 122.0.0.0/24, mapping IP addresses within this range to domain names. The file directive points to the database file that contains the PTR records for this zone.
+> PTR records in the reverse zone database (db.122) would then map IP addresses back to domain names, allowing reverse DNS lookups to succeed.
+
 ## Preperation
 - ***on the machine that runs the dns:***
   - get the ips of the NIC`s
 ```Bash
-- ip a
+ # ip a
 ```
 >```
 >...
@@ -59,7 +96,9 @@
 
 ## configure your DNS
 
-> in our case we want to resolve  foreman.de to the ip `xxx` 
+> in our case we want to resolve  `foreman.de` to the ip `192.168.122.20`
+>  - the ip is the one of my vm that runs foreman (i need dns because of smartproxy and external dhcp) 
+
 - edit the `named.conf.options` file
   
 >```
@@ -114,7 +153,7 @@
 
 ---
 
-- create the foreward and backward files:
+- create configs for our forward and backward zone:
 ```Bash
  # cp /etc/bind/db.local /etc/bind/zones/foreman.de
  # cp /etc/bind/db.127 /etc/bind/zones/foreman.de.rev
@@ -193,6 +232,7 @@
 - we have several options here:
 > ***DNS-Host:***
 > - journalctl, syslogs, cache
+> 
 > ***DNS-Client:***
 > - wget, dig, telnet, tcdump
 
@@ -251,7 +291,7 @@
 >;; WHEN: Fri Jun 07 16:16:14 CEST 2024
 >;; MSG SIZE  rcvd: 83
 >```
-> so just figured out that our DNS is `192.168.122.7` and that he found our IP in A
+> so just figured out that our DNS is `192.168.122.7` and that he found our IP is using  `A`-Record
 
 ---
 
@@ -261,19 +301,71 @@ sudo tcpdump udp port 53 --interface virbr0 -vv
 ```
 > - we use `virbr0` since its the network bridge the machine of our DNS-host requries, since its also running proxmox
 > - is use my mobile phone here to access the internet, so the other DNS that's inside my resolv.conf will be ignored
-- a successfull query will look like this:
->```
->dropped privs to tcpdump
->tcpdump: listening on virbr0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
->...
->    192.168.122.7.domain > my-proxmox.de.33723: [bad udp cksum 0x75ab -> 0xf568!] 60350*- q: AAAA? foreman.de. 1/0/0 foreman.de. AAAA ::1 (56)
->16:04:48.840074 IP (tos 0x0, ttl 64, id 23172, offset 0, flags [DF], proto UDP (17), length 56)
->    my-proxmox.de.50724 > 192.168.122.7.domain: [bad udp cksum 0x758f -> 0x26fa!] 63196+ A? foreman.de. (28)
->16:04:48.840088 IP (tos 0x0, ttl 64, id 23173, offset 0, flags [DF], proto UDP (17), length 56)
->    my-proxmox.de.50724 > 192.168.122.7.domain: [bad udp cksum 0x758f -> 0xc8e3!] 21720+ AAAA? foreman.de. (28)
->16:04:48.840507 IP (tos 0x0, ttl 64, id 31967, offset 0, flags [none], proto UDP (17), length 72)
->    192.168.122.7.domain > my-proxmox.de.50724: [bad udp cksum 0x759f -> 0x6d7f!] 63196*- q: A? foreman.de. 1/0/0 foreman.de. A 192.168.122.20 (44)
->16:04:48.840569 IP (tos 0x0, ttl 64, id 31968, offset 0, flags [none], proto UDP (17), length 84)
->```
+> - a successfull query could look like this:
+> 
+>| **Output** | **Description** |
+>|------------|------------------|
+>| ```16:04:48.840074 IP (tos 0x0, ttl 64, id 23172, offset 0, flags [DF], proto UDP (17), length 56) my-proxmox.de.50724 > 192.168.122.7.domain: [bad udp cksum 0x758f -> 0x26fa!] 63196+ A? foreman.de. (28)``` | Query for A records of `foreman.de` with bad UDP checksum |
+>| ```16:04:48.840088 IP (tos 0x0, ttl 64, id 23173, offset 0, flags [DF], proto UDP (17), length 56) my-proxmox.de.50724 > 192.168.122.7.domain: [bad udp cksum 0x758f -> 0xc8e3!] 21720+ AAAA? foreman.de. (28)``` | Repeated query for AAAA records of `foreman.de` with bad UDP checksum |
+>| ```16:04:48.840507 IP (tos 0x0, ttl 64, id 31967, offset 0, flags [none], proto UDP (17), length 72) 192.168.122.7.domain > my-proxmox.de.50724: [bad udp cksum 0x759f -> 0x6d7f!] 63196*- q: A? foreman.de. 1/0/0 foreman.de. A 192.168.122.20 (44)``` | Response to A record query for `foreman.de` with bad UDP checksum; contains A address `192.168.122.20` |
+>| ```16:04:48.840569 IP (tos 0x0, ttl 64, id 31968, offset 0, flags [none], proto UDP (17), length 84) 192.168.122.7.domain > my-proxmox.de.50724: [bad udp cksum 0x759f -> 0x6d7f!] 63196*- q: A? foreman.de. 1/0/0 foreman.de. A 192.168.122.20 (44)``` | Further response to A record query for `foreman.de` with bad UDP checksum; likely a repeated or additional response |
 
 ---
+
+### DNS-HOST
+***tail the logs of your nameserver:***
+```Bash
+journalctl -u named.service -f
+```
+> ***DNS-Request via `browser`:***
+>| ***Output*** | ***Description*** |
+>|--------------|-------------------|
+>| ```Jun 07 16:37:49 my-proxmox named[413848]: client @0x751f6388a168 192.168.122.1#38768 (foreman.de): query: foreman.de IN A + (192.168.122.7)``` | Initial Request for `foreman.de` (A Record) - Successful |
+>| ```Jun 07 16:37:50 my-proxmox named[413848]: client @0x751f6468bd68 192.168.122.1#58656 (www.google.com): query: www.google.com IN A + (192.168.122.7)``` | Subsequent Request for `www.google.com` (A Record) - Failed due to refusal |
+>| ```Jun 07 16:37:50 my-proxmox named[413848]: client @0x751f6468cb68 192.168.122.1#58656 (www.google.com): query: www.google.com IN AAAA + (192.168.122.7)``` | Additional Request for `www.google.com` (AAAA Record) - Failed due to refusal |
+>| ```Jun 07 16:37:51 my-proxmox named[413848]: client @0x751f6140b968 192.168.122.1#57363 (foreman.de): query: foreman.de IN A + (192.168.122.7)``` | Final Request for `foreman.de` (A Record) - Successful |
+>| ```Jun 07 16:37:51 my-proxmox named[413848]: client @0x751f61408f68 192.168.122.1#57363 (foreman.de): query: foreman.de IN AAAA + (192.168.122.7)``` | Final Request for `foreman.de` (AAAA Record) - Successful |
+> 
+> ***DNS-Request via `dig`-command:***
+>| ***Output*** | ***Description*** |
+>|--------------|-------------------|
+>| ```Jun 07 16:44:16 my-proxmox named[413848]: client @0x751f62288d68 192.168.122.1#46572 (foreman.de): query: foreman.de IN A +E(0)K (192.168.122.7)``` | Successful DNS Lookup for `foreman.de` using `dig` command |
+
+
+## Security, Snooping & Spoofing
+### Spoofing
+- we can get the ip's of the clients that that send DNS-requests to the server
+  - this is because the dns stores/caches the ips of the clients for the reverse request to speed up the connection-process
+```Bash
+dig +norecurse @192.168.122.7 foreman.de
+```
+>```
+>; <<>> DiG 9.16.23-RH <<>> +norecurse @192.168.122.7 foreman.de
+>; (1 server found)
+>;; global options: +cmd
+>;; Got answer:
+>;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 17547
+>;; flags: qr aa; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 2
+>
+>;; OPT PSEUDOSECTION:
+>; EDNS: version: 0, flags:; udp: 1232
+>; COOKIE: 05a3b545adc9f83701000000666323381697775d93001fbd (good)
+>;; QUESTION SECTION:
+>;foreman.de.			IN	A
+>
+>;; ANSWER SECTION:
+>foreman.de.		604800	IN	A	192.168.122.20
+>
+>;; AUTHORITY SECTION:
+>foreman.de.		604800	IN	NS	bindserver.foreman.de.
+>foreman.de.		604800	IN	NS	localhost.
+>
+>;; ADDITIONAL SECTION:
+>bindserver.foreman.de.	604800	IN	A	192.168.122.20
+>
+>;; Query time: 1 msec
+>;; SERVER: 192.168.122.7#53(192.168.122.7)
+>;; WHEN: Fri Jun 07 17:11:52 CEST 2024
+>;; MSG SIZE  rcvd: 147
+ >```
+> now we know that `localhost` made a DNS-request for `foreman.de`
