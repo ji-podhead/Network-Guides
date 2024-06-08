@@ -211,19 +211,19 @@ Depending on the configuration, the modified response could lead to a safe locat
 ***PDNS***
 - cloudflare it self is no PDNS but it comes with a variety of protection layers: `DNSSEC, DDoS-Protection and Load Balancing `
 
-**alternatives:**
+***cloudflare alternative:***
 
-- you basically have two options here:
+- with [cloudflare DNS](https://developers.cloudflare.com/dns/) you basically have two options:
 	- 1. use a providers PDNS as your secondary DNS / use forwarding
 	- 2. use a providers DNS as your primary DNS 
 		- **Isolate Private DNS Traffic**: Ensure that your private DNS queries do not pass through Cloudflare's public DNS resolver unless explicitly required. This can be achieved by configuring your network or firewall rules to route private DNS queries directly to your PowerDNS Recursor.  
 
-***DNS-Firewall for DDOS-Protection***
+**DNS-Firewall for DDOS-Protection**
 
 - cloudflare: [DNS-Firewall](https://developers.cloudflare.com/dns/dns-firewall/)
 
 
-***Enable DNSSEC Validation***
+**Enable DNSSEC Validation**
 
 - General Recommendation: While PF/OpenSense does not directly handle DNSSEC validation, enabling DNSSEC on your DNS resolver configuration ensures that DNS responses are validated against signed records, providing protection against DNS spoofing.
 - cloudflare: [cloudflare DNSSEC](https://www.cloudflare.com/de-de/dns/dns-firewall/) 
