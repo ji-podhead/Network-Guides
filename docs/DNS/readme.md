@@ -700,7 +700,10 @@ print(f"DNS spoofing
 ---
 
 ***Practical Example of DNS Cache Poisoning Prevention***
-Let's consider a scenario where you're setting up a DNS server using BIND9. To mitigate the risk of DNS cache poisoning, you should implement TSIG authentication for DNS transactions. Here's how you can configure TSIG authentication in BIND9:
+
+> Let's consider a scenario where you're setting up a DNS server using BIND9.
+> To mitigate the risk of DNS cache poisoning, you should implement TSIG authentication for DNS transactions.
+>  Here's how you can configure TSIG authentication in BIND9:
 
 - Generate a Key: First, generate a shared secret key for TSIG authentication. 
 - This can be done using the dnssec-keygen tool:
