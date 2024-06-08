@@ -1,4 +1,21 @@
 
+
+
+ | [Repo](https://ji-podhead.github.io/RHEL_9_Foreman_Guide/knowledge%20base)| [main](https://ji-podhead.github.io/RHEL_9_Foreman_Guide/knowledge%20base)| [DNS](https://ji-podhead.github.io/RHEL_9_Foreman_Guide/installation%20(katello%2Cdiscovery%2Cdhcp%2Ctftp)) | 
+
+---
+
+ | [Knowledge Base](https://ji-podhead.github.io/RHEL_9_Foreman_Guide/knowledge%20base)| [Install](https://ji-podhead.github.io/RHEL_9_Foreman_Guide/installation%20(katello%2Cdiscovery%2Cdhcp%2Ctftp)) | [Test&Debug](https://ji-podhead.github.io/RHEL_9_Foreman_Guide/installation%20(katello%2Cdiscovery%2Cdhcp%2Ctftp)) | [Attack Vectors & Scenario](https://ji-podhead.github.io/RHEL_9_Foreman_Guide/discovery%20and%20provisioning) | [Protection](https://ji-podhead.github.io/RHEL_9_Foreman_Guide/libvirt) | 
+ # Install
+ > - we will install our dns on Debian
+>   - its a stable distro for networking
+>   - its my proxmox-machine so i thought it would make sense not to outsource my dns and dhcp and i use the proxmox machine for my networking and virtualisation stuff anyway.
+> - ***DO NOT EXPOSE PORT 53 UNLESS YOU KNOW WHAT YOU ARE DOING AND HAVE PROPPER `ACL` CONFIGURED!***
+>   - this will probably flood your server with public DNS-request and might break it
+>     - to avoid unnecessary traffic, we  set `recursion no;` in `/etc/bind/named.conf.options`
+> - in our Example we use `dynamic  update` ***without configuring clients*** specifically since this is a private DNS
+>     -  hence we set `allow-query { any; };` in the zones we configure in `/etc/bind/named.conf.local`
+
 ## Preperation
 - ***on the machine that runs the dns:***
   - get the ips of the NIC`s
