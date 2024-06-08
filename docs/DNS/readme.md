@@ -27,5 +27,7 @@
 > - we learn how and why to prevent our personal data from snooping-attacks and datamining
 >   - this is the basis to setup cloud9 to avoid public DNS queries and therefore a huge attack-vector
 > - in the next step we configure our DNS in combination with our own private DHCP and subnets
-
+> -ssl using certmanager and letsencrypt
+> - authentication using rbac and oaut2
+> - ddos protection and proxy using cloudflare
 ---
