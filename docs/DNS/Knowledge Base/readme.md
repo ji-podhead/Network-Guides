@@ -157,6 +157,7 @@ sequenceDiagram
 
 > -  When a client requests a zone transfer, the source DNS server queries the zone file, sends a response to the client
 > -  the target DNS server checks permissions. If permissions are granted, the zone data is transferred; otherwise, the transfer is denied.
+
 ## Understanding DNS Query Output
 
 When querying a DNS server for domain name resolution, the response contains several sections that provide detailed information about the queried domain. 
