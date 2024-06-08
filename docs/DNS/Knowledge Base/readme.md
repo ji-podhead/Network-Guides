@@ -67,6 +67,8 @@ An ACL is defined in the DNS server's configuration file and consists of a list 
 > In this example, only the IP addresses within the `192.168.1.0/24`,`192.168.122.0/24` and `192.168.123.0/24` ranges are permitted to perform queries against the DNS server. 
 
 ---
+
+
 ## Forward Zones
 Forward zones map domain names to IP addresses. They are the primary mechanism by which DNS servers respond to queries asking for the IP address associated with a given domain name.
 
@@ -145,6 +147,24 @@ When changes are made to the zone files, they are synchronized via the zone tran
 > -  When a client requests a zone transfer, the source DNS server queries the zone file, sends a response to the client
 > -  the target DNS server checks permissions. If permissions are granted, the zone data is transferred; otherwise, the transfer is denied.
 
+## Response Policy Zone (RPZ)
+
+RPZ is a mechanism designed to introduce customized policies within Domain Name System (DNS) servers. This customization enables recursive resolvers to return potentially altered results, effectively blocking access to certain hosts by modifying the returned data. RPZ operates based on DNS data feeds, known as zone transfers, received from an RPZ provider to the deploying server. Unlike traditional blocklist methods, the actual blocklist is not visible or managed by the client application. Instead, if the queried name or the resulting IP address is listed in the blocklist, the response is modified to prevent access.
+
+***Purpose***
+
+RPZ serves as a filtering mechanism, either preventing users from accessing certain internet domains or redirecting them to safer alternatives by manipulating DNS answers. It allows DNS recursive resolver operators to obtain reputational data from external organizations about potentially harmful domains and use this information to protect users from accessing these domains.
+
+***Mechanism and Data***
+
+RPZ requires data to function. Various internet security organizations and services offer RPZ data for specific domain categories or potentially dangerous domains. Additionally, recursive resolver operators can define their own domain name data (zones) to be utilized by RPZ.
+
+***Function***
+
+RPZ empowers a DNS recursive resolver to select specific actions for various collections of domain name data (zones). These actions can range from performing full resolution (standard behavior) to declaring that the requested domain does not exist (NXDOMAIN) or suggesting a different domain (CNAME).
+
+---
+
 ## Understanding DNS Query Output
 
 When querying a DNS server for domain name resolution, the response contains several sections that provide detailed information about the queried domain. 
@@ -161,4 +181,10 @@ Here's a breakdown of these sections based on the example output you provided:
 
 ---
 
+## nxdomain
+
+- NXDOMAIN is a DNS error message indicating that the domain name queried does not exist.
+  - This message is received by the client, typically a Recursive DNS server, when it attempts to resolve a domain name to an IP address but fails because the domain name is not recognized in the DNS system. Essentially, NXDOMAIN signifies that the domain name specified in the DNS query does not exist in the DNS database.
+  - Only an authoritative nameserver can return an NXDOMAIN response.
+  -  If the domain name exists but the requested DNS record type doesn't, a NOERROR response without specific answers can still be returned. NXDOMAIN errors can occur due to typos in the domain name, incorrect configurations, or malicious activities such as NXDOMAIN attacks, where attackers flood DNS servers with requests for non-existent domain names to exhaust their resources and disrupt service
 
