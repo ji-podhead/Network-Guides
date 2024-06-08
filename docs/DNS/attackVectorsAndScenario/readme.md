@@ -113,21 +113,7 @@ print("Sent DNS response packets.")
    - use random Transaction-Number in brute-force-manier
  
 
-```mermaid
-sequenceDiagram
-    participant Attacker as Attacker (192.168.1.100)
-    participant Victim as Victim Client (192.168.122.7)
-    Attacker->>Victim: Generates a random transaction ID
-    Attacker->>Victim: Creates a fake DNS query for foreman.de
-    Attacker->>Victim: Sends the fake DNS query
-    Note over Attacker,Victim: Victim receives the fake DNS query
-    Attacker->>Victim: Creates a fake DNS response for foreman.de pointing to 1.3.3.7
-    Attacker->>Victim: Sends the fake DNS response
-    Note over Attacker,Victim: Victim caches the fake DNS response
-    Attacker->>Victim: Later, Victim requests foreman.de
-    Attacker->>Victim: Returns the cached fake DNS response (1.3.3.7)
-    Note over Victim: Victim tries to access foreman.de but is redirected to a different site
-```
+![DNS-spoofing](https://github.com/ji-podhead/Network-Guides/blob/main/docs/DNS/attackVectorsAndScenario/dns-spoofing.png?raw=true)
 
 ```python
 from scapy.all import send, IP, UDP, DNS, DNSQR, DNSRR
