@@ -13,7 +13,7 @@
 > - ***DO NOT EXPOSE PORT 53 UNLESS YOU KNOW WHAT YOU ARE DOING AND HAVE PROPPER `ACL` CONFIGURED!***
 >   - this will probably flood your server with public DNS-request and might break it
 >     - to avoid unnecessary traffic, we  set `recursion no;` in `/etc/bind/named.conf.options`
-> - in our Example we use `dynamic  update` ***without configuring clients*** specifically since this is a private DNS
+> - in our Example we use `dynamic  update` ***without configuring clients*** specifically since this is a ***private DNS***
 >     -  hence we set `allow-query { any; };` in the zones we configure in `/etc/bind/named.conf.local`
 
 ## Preperation
