@@ -1,4 +1,12 @@
 # Network-Guides
+
+
+ | [Repo](https://github.com/ji-podhead/Network-Guides/) | [main](https://ji-podhead.github.io/Network-Guides/DNS) | [DNS](https://ji-podhead.github.io/Network-Guides/DNS) | 
+
+---
+
+ | [Knowledge Base](https://ji-podhead.github.io/Network-Guides/DNS/Knowledge%20Base)| [Install](https://ji-podhead.github.io/Network-Guides/DNS/install) | [Test&Debug](https://ji-podhead.github.io/Network-Guides/DNS/testAndDebug) | [Attack Vectors & Scenario](https://ji-podhead.github.io/Network-Guides/DNS/attackVectorsAndScenario) | [Protection](https://ji-podhead.github.io/Network-Guides/DNS/protection) | 
+ 
 ***In this series i will cover different network topics like DNS, DHCP, SSL (certmanager + letsencrypt).*** 
 - The content derives from my personal research, studies and work.
 - this will also be available on medium as blog-posts.
