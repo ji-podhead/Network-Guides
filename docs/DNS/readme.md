@@ -10,7 +10,9 @@
  - [***4. attack vectors:***](https://ji-podhead.github.io/Network-Guides/attackVectorsAndScenario)
  > how to hack a dns and what are  possible attack scenarios 
  - [***5 .protection:***](https://ji-podhead.github.io/Network-Guides/protection)
-> how to protect your DNS using TSIG, dnssec and Enhanced Security practices for kubernetes in combination with private dns
+> - how to protect your DNS using TSIG, dnssec
+> - Enhanced Security practices for kubernetes in combination with private dns
+> - how to setup our firewall
 
 ----
 
