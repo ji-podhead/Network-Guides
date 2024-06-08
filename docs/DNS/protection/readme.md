@@ -175,7 +175,7 @@ Depending on the configuration, the modified response could lead to a safe locat
 
 ***Providers***
 
-- The document [Selecting a Protective DNS Service](https://media.defense.gov/2021/Mar/03/2002593055/-1/-1/0/CSI_Selecting-Protective-DNS_UOO11765221.PDF) by the National Security Agency (NSA) and the Cybersecurity & Infrastructure Security Agency (CISA), [published in May 2021](https://www.defense.gov/), provides comprehensive information on selecting a protective DNS service (PDNS). 
+- The document [Selecting a Protective DNS Service](https://media.defense.gov/2021/Mar/03/2002593055/-1/-1/0/CSI_Selecting-Protective-DNS_UOO11765221.PDF) by the National Security Agency (NSA) and the Cybersecurity & Infrastructure Security Agency (CISA), [published in May 2021 by defense.gov](https://www.defense.gov/), provides comprehensive information on selecting a protective DNS service (PDNS). 
 <div>
 <table border="1">
     <tr>
