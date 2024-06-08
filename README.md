@@ -12,16 +12,16 @@
 - this will also be available on medium as blog-posts.
 
 ## 1. DNS 
- - [***1. knowledge base:***](https://ji-podhead.github.io/Network-Guides/Knowledge%20Base)
+ - [***1. knowledge base:***](https://ji-podhead.github.io/Network-Guides/DNS/Knowledge%20Base)
  > everything you need to know to run and protect your own DNS
- - [***2. install:***](https://ji-podhead.github.io/Network-Guides/install)
+ - [***2. install:***](https://ji-podhead.github.io/Network-Guides/DNS/install)
  >  - we will install private DNS on debian using bind9
  >  - we configure the DNS to resolve our personal Dashboard Domains
- - [***3. debug:***](https://ji-podhead.github.io/Network-Guides/testAndDebug)
+ - [***3. debug:***](https://ji-podhead.github.io/Network-Guides/DNS/testAndDebug)
  > we learn how to debug our dns using dig, nameserver logs, etc 
- - [***4. attack vectors:***](https://ji-podhead.github.io/Network-Guides/attackVectorsAndScenario)
+ - [***4. attack vectors:***](https://ji-podhead.github.io/Network-Guides/DNS/attackVectorsAndScenario)
  > how to hack a dns and what are  possible attack scenarios 
- - [***5 .protection:***](https://ji-podhead.github.io/Network-Guides/protection)
+ - [***5 .protection:***](https://ji-podhead.github.io/Network-Guides/DNS/protection)
 > how to protect your DNS using TSIG, dnssec and Enhanced Security practices for kubernetes in combination with private dns
 
 ----
