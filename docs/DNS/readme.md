@@ -1,7 +1,3 @@
-# Network-Guides
-***In this series i will cover different network topics like DNS, DHCP, SSL (certmanager + letsencrypt).*** 
-- The content derives from my personal research, studies and work.
-- this will also be available on medium as blog-posts.
 
 ## 1. DNS 
  - [***1. knowledge base:***](https://ji-podhead.github.io/Network-Guides/Knowledge%20Base)
