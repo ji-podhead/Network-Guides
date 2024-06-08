@@ -97,6 +97,7 @@ sudo tcpdump udp port 53 --interface virbr0 -vv
 journalctl -u named.service -f
 ```
 > ***DNS-Request via `browser`:***
+>
 >| ***Output*** | ***Description*** |
 >|--------------|-------------------|
 >| ```Jun 07 16:37:49 my-proxmox named[413848]: client @0x751f6388a168 192.168.122.1#38768 (foreman.de): query: foreman.de IN A + (192.168.122.7)``` | Initial Request for `foreman.de` (A Record) - Successful |
@@ -106,6 +107,7 @@ journalctl -u named.service -f
 >| ```Jun 07 16:37:51 my-proxmox named[413848]: client @0x751f61408f68 192.168.122.1#57363 (foreman.de): query: foreman.de IN AAAA + (192.168.122.7)``` | Final Request for `foreman.de` (AAAA Record) - Successful |
 > 
 > ***DNS-Request via `dig`-command:***
+>
 >| ***Output*** | ***Description*** |
 >|--------------|-------------------|
 >| ```Jun 07 16:44:16 my-proxmox named[413848]: client @0x751f62288d68 192.168.122.1#46572 (foreman.de): query: foreman.de IN A +E(0)K (192.168.122.7)``` | Successful DNS Lookup for `foreman.de` using `dig` command |
