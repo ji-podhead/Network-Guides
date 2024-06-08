@@ -55,6 +55,7 @@ dig +norecurse @192.168.122.7 foreman.de
 ---
 
 ### DNS Cache-Poisining
+
  DNS cache poisoning, is a malicious activity where an attacker injects false DNS records into a DNS server's cache. 
 > - This manipulation tricks the DNS server into returning incorrect IP addresses for a domain name, redirecting users to malicious websites instead of legitimate ones.
 
@@ -67,9 +68,11 @@ dig +norecurse @192.168.122.7 foreman.de
 ---
 
 ***Sending a fake record using spoofed ip***
+
 - attack an additional nameserver in order to respond to the targeted nameserver with a correct ip, but also with a ***fake record***
    -  a ***denial of service attack*** such as DDOS can be used to kill the additional nameserver to spoof it
    - server got taken over by any other hack and gets controlled directly
+     
 ```Python
 from scapy.all import *
 
@@ -96,12 +99,12 @@ send(response_packet_test)
 send(response_packet_wiki)
 
 print("Sent DNS response packets.")
-
 ```
 
 ---
 
 ***Sending a fake query by using IP-Spoofing***
+
 - we will attack the victim directly instead of using an additional nameserver
  - a ***denial of service attack*** such as DDOS could be used to kill the corresponding DNS 
 - the spoofed DNS sends a `fake query` directly to the victim 
@@ -124,7 +127,6 @@ sequenceDiagram
     Attacker->>Victim: Later, Victim requests foreman.de
     Attacker->>Victim: Returns the cached fake DNS response (1.3.3.7)
     Note over Victim: Victim tries to access foreman.de but is redirected to a different site
-
 ```
 
 ```python
@@ -171,6 +173,7 @@ print(f"DNS spoofing
 ---
 
 ###  Possible Szenario
+
 > Escaping a Web Application Container and Attacking a Private DNS Server
 
 ***Background***
