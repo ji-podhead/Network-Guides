@@ -184,7 +184,9 @@ Here's a breakdown of these sections based on the example output you provided:
 ## nxdomain
 
 - NXDOMAIN is a DNS error message indicating that the domain name queried does not exist.
-  - This message is received by the client, typically a Recursive DNS server, when it attempts to resolve a domain name to an IP address but fails because the domain name is not recognized in the DNS system. Essentially, NXDOMAIN signifies that the domain name specified in the DNS query does not exist in the DNS database.
+  - This message is received by the client, typically a Recursive DNS server, when it attempts to resolve a domain name to an IP address but fails because the domain name is not recognized in the DNS system.
+  - Essentially, NXDOMAIN signifies that the domain name specified in the DNS query does not exist in the DNS database.
   - Only an authoritative nameserver can return an NXDOMAIN response.
-  -  If the domain name exists but the requested DNS record type doesn't, a NOERROR response without specific answers can still be returned. NXDOMAIN errors can occur due to typos in the domain name, incorrect configurations, or malicious activities such as NXDOMAIN attacks, where attackers flood DNS servers with requests for non-existent domain names to exhaust their resources and disrupt service
+  -  If the domain name exists but the requested DNS record type doesn't, a NOERROR response without specific answers can still be returned.
+  -  NXDOMAIN errors can occur due to typos in the domain name, incorrect configurations, or malicious activities such as NXDOMAIN attacks, where attackers flood DNS servers with requests for non-existent domain names to exhaust their resources and disrupt service
 
