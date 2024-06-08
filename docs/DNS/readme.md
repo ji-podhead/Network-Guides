@@ -1,5 +1,5 @@
 
-## 1. DNS 
+## DNS 
  - [***1. knowledge base:***](https://ji-podhead.github.io/Network-Guides/Knowledge%20Base)
  > everything you need to know to run and protect your own DNS
  - [***2. install:***](https://ji-podhead.github.io/Network-Guides/install)
