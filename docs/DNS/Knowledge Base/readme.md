@@ -129,31 +129,7 @@ Here's an example of how to define specific clients using IP addresses:
 Zone transfer is an important mechanism to ensure that all DNS servers have the same data set. 
 When changes are made to the zone files, they are synchronized via the zone transfer. 
 > `AXFR` (Asynchronous Full Transfer Zone) is a method used for this purpose.
-
-```mermaid
-sequenceDiagram
-
-    participant Client as Client Request
-    participant DNSMaster as Source DNS Server (Primary)
-    participant DNSSlave as Target DNS Server (Secondary)
-    participant ZoneFile as Zone File
-
-
-    Client->>DNSMaster: Send Zone Transfer Request
-    DNSMaster->>Client: Acknowledge Request
-    DNSMaster->>DNSSlave: Initiate Zone Transfer
-    DNSSlave->>DNSMaster: Confirm Ready to Receive
-    DNSMaster->>ZoneFile: Read Zone Data
-    ZoneFile-->>DNSMaster: Return Zone Data
-    DNSMaster->>DNSSlave: Send Zone Data
-    DNSSlave->>DNSMaster: Acknowledge Receipt of Zone Data
-    DNSSlave->>ZoneFile: Write Zone Data
-    ZoneFile-->>DNSSlave: Confirmation of Successful Write
-    DNSSlave->>DNSMaster: Notify Completion of Zone Transfer
-    DNSMaster->>Client: Notify Completion of Zone Transfer
-
-
-```
+![zone_transfer](https://github.com/ji-podhead/Network-Guides/blob/main/docs/DNS/Knowledge%20Base/networkGuide_zone_transfer.png?raw=true)
 
 > -  When a client requests a zone transfer, the source DNS server queries the zone file, sends a response to the client
 > -  the target DNS server checks permissions. If permissions are granted, the zone data is transferred; otherwise, the transfer is denied.
