@@ -195,32 +195,13 @@
 
 ---
 
-***edit AppArmor*** *(if you fail to restart isc-dhcp)*
-```Bash
-# sudo nano /etc/apparmor.d/usr.sbin.dhcpd  
-```
-> add 
-> ```perl
->/etc/bind/ rw,
->/etc/bind/** rw,
->```
-
-restart AppArmor:
-
-```Bash
-# apparmor_parser -r /etc/apparmor.d/usr.sbin.dhcpd  
-```
-
----
-
-  ***restart/refresh DNS & DHCP***
+  ***restart/refresh DNS***
 ```Bash
 # named-checkzone foreman.de /etc/bind/zones/foreman.de
 # named-checkzone foreman.de /etc/bind/zones/foreman.de.rev
 # named-checkconf /etc/bind/named.conf.options
 # named-checkconf
 # sudo systemctl restart bind9
-# sudo systemctl restart isc-dhcp-server
 ```  
 
 ---
