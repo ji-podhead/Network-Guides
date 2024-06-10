@@ -8,7 +8,7 @@
 ## DNS
  | [Knowledge Base](https://ji-podhead.github.io/Network-Guides/DNS/Knowledge%20Base)| [Install](https://ji-podhead.github.io/Network-Guides/DNS/install) | [Test&Debug](https://ji-podhead.github.io/Network-Guides/DNS/testAndDebug) | [Attack Vectors & Scenario](https://ji-podhead.github.io/Network-Guides/DNS/attackVectorsAndScenario) | [Protection](https://ji-podhead.github.io/Network-Guides/DNS/protection) | 
 
- ## Dynamic Updates
+ ## Dynamic Updates & RNDC
  - create a rdnc key
   ```Bash
    #  echo rndc-confgen >> /etc/bind/rndc.conf
