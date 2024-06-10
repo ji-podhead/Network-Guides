@@ -199,4 +199,13 @@ restart AppArmor:
 # sudo systemctl restart bind9
 # sudo systemctl restart isc-dhcp-server
 ```  
-´
+---
+
+***check if it works***
+
+```Bash
+# nslookup 192.168.122.20 localhost
+# nslookup foreman.de 
+```
+
+---
