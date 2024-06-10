@@ -138,6 +138,22 @@ Here's an example of how to define specific clients using IP addresses:
 > - This method provides a more controlled environment compared to allow-query { any; };.
 
 ---
+
+# RNCD
+
+> - An rndc.key is a cryptographic key used by the BIND DNS server for authentication purposes, particularly in scenarios involving dynamic updates to DNS zones. This key ensures that only authorized clients can modify the DNS records within a zone, enhancing security by preventing unauthorized changes.
+> - Dynamic updates allow DNS records to be modified without manually editing the zone files. This is particularly useful in environments where DNS records need to be frequently updated, such as in large networks or cloud-based services. However, dynamic updates require secure mechanisms to prevent unauthorized modifications.
+
+Here's how rndc.key fits into the picture:
+
+ - Authentication for Dynamic Updates: When configuring a zone for dynamic updates, you specify an allow-update clause in the zone's configuration. Within this clause, you can specify one or more keys that are allowed to perform updates. Each client attempting a dynamic update must present a valid rndc.key that matches one of these keys.
+- Security through Encryption: The rndc.key itself is encrypted using a specified algorithm (such as HMAC-MD5). This means that even if someone intercepts the key, they cannot use it without knowing the encryption algorithm and the original plaintext key.
+- Integration with ACLs (Access Control Lists): You can further refine who can perform dynamic updates by specifying Access Control Lists (ACLs) in conjunction with the allow-update clause. This allows you to restrict updates to specific IP addresses or networks, adding another layer of security.
+
+Without rndc, managing dynamic updates becomes significantly more challenging. While you could theoretically manage DNS records manually or through scripts, doing so securely and efficiently would be difficult. The rndc tool provides commands like rndc freeze and rndc thaw to safely edit dynamic zones, ensuring that updates are not lost during the editing process.
+
+---
+
 ## Zone Transfer
 Zone transfer is an important mechanism to ensure that all DNS servers have the same data set. 
 When changes are made to the zone files, they are synchronized via the zone transfer. 
