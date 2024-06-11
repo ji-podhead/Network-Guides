@@ -10,6 +10,7 @@
 
  ## Dynamic Updates & RNDC
  - create a rdnc key
+ 
   ```bash
    $  echo rndc-confgen >> /etc/bind/rndc.conf
    $  chmod 660 /etc/bind/rndc.conf
@@ -32,6 +33,7 @@ include "/etc/bind/named.conf.default-zones";
 
 ***named.conf.local***
 > `/etc/bind/named.conf.local`
+
 ```yaml
 include "/etc/bind/rndc.conf";
 controls {
@@ -57,7 +59,9 @@ zone "122.168.192.in-addr.arpa" IN {
 ---
 
 ***named.conf.options***
+
 > `/etc/bind/named.conf.options`
+
 ```yaml
 acl internals { 127.0.0.0/8; 192.168.122.0/24; };
 controls { inet 127.0.0.1 port 953 allow { 127.0.0.1; }; };
@@ -80,7 +84,9 @@ options {
 
 
 ***forward-lookup-zone `foreman.de`***
+
 > `/etc/bind/zones/foreman.de`
+
 ```yaml
 ; BIND data file for local loopback interface
 ;
@@ -105,7 +111,9 @@ bindserver      IN      A       192.168.122.20
 ---
 
 ***reverse-lookup-zone `foreman.de.rev`***
+
 > `/etc/bind/zones/foreman.de.rev`
+
 ```yaml
 ; BIND reverse data file for local loopback interface
 ;
@@ -130,7 +138,9 @@ bindserver      IN      A      192.168.122.20
 ---
 
 ***dhcp.conf***
+
 > `/etc/dhcp/dhcpd.conf`
+
 ```yaml
 update-static-leases on;
 use-host-decl-names on;
@@ -173,6 +183,7 @@ subnet 192.168.122.0 netmask 255.255.255.0 {
 ---
 
 ***edit AppArmor*** *(if you fail to restart isc-dhcp)*
+
 ```bash
 $ sudo nano /etc/apparmor.d/usr.sbin.dhcpd  
 ```
@@ -191,6 +202,7 @@ $ apparmor_parser -r /etc/apparmor.d/usr.sbin.dhcpd
 ---
 
   ***restart/refresh DNS & DHCP***
+
 ```bash
 $ named-checkzone foreman.de /etc/bind/zones/foreman.de
 $ named-checkzone foreman.de /etc/bind/zones/foreman.de.rev
