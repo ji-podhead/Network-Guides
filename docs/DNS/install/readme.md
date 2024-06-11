@@ -5,7 +5,7 @@
 ---
 
 ## DNS
- | [Knowledge Base](https://ji-podhead.github.io/Network-Guides/DNS/Knowledge%20Base)| [Install](https://ji-podhead.github.io/Network-Guides/DNS/install) | [Test&Debug](https://ji-podhead.github.io/Network-Guides/DNS/testAndDebug) | [Attack Vectors & Scenario](https://ji-podhead.github.io/Network-Guides/DNS/attackVectorsAndScenario) | [Protection](https://ji-podhead.github.io/Network-Guides/DNS/protection) | 
+ | [Knowledge Base](https://ji-podhead.github.io/Network-Guides/DNS/Knowledge%20Base)| [Install](https://ji-podhead.github.io/Network-Guides/DNS/install) | [Test&Debug](https://ji-podhead.github.io/Network-Guides/DNS/testAndDebug) | [Dynamic Updates & RNDC](https://ji-podhead.github.io/Network-Guides/DNS/Dynmaic_Updates_%26_RNDC) | [Attack Vectors & Scenario](https://ji-podhead.github.io/Network-Guides/DNS/attackVectorsAndScenario) | [Protection](https://ji-podhead.github.io/Network-Guides/DNS/protection) | 
  
  # Install
  > - we will install our dns on Debian
@@ -20,8 +20,8 @@
 ## Preperation
 - ***on the machine that runs the dns:***
   - get the ips of the NIC`s
-```Bash
- # ip a
+```bash
+ $ ip a
 ```
 >```
 >...
@@ -42,7 +42,8 @@
 
 - ***on the host:***
   - check out the resolv.conf and add the ip of the nameserver that we will just create.
->```
+
+>```yaml
 >############################################################################################################
 >#                                        /etc/resolv.conf 
 >#############################################################################################################
@@ -61,14 +62,14 @@
 ---
  
   ## Install Bind9
-  ```Bash
-  #  sudo apt-get install bind9 bind9utils bind9-doc
+  ```bash
+  $  sudo apt-get install bind9 bind9utils bind9-doc
   ```
   - enable it:
   
-  ```Bash
-# systemctl enable bind9
-# sudo systemctl enable named
+  ```bash
+$ systemctl enable bind9
+$ sudo systemctl enable named
 ```
 ---
 
@@ -79,7 +80,7 @@
 
 - edit the `named.conf.options` file
   
->```
+>```yaml
 >############################################################################################################
 >#                                        /etc/bind/named.conf.options
 >#############################################################################################################
@@ -109,7 +110,7 @@
 ---
 
 - edit `nano /etc/bind/named.conf.local`
->```
+>```yaml
 >############################################################################################################
 >#                                        /etc/bind/named.conf.local
 >#############################################################################################################
@@ -132,15 +133,15 @@
 ---
 
 - create configs for our forward and backward zone:
-```Bash
- # cp /etc/bind/db.local /etc/bind/zones/foreman.de
- # cp /etc/bind/db.127 /etc/bind/zones/foreman.de.rev
+```bash
+ $ cp /etc/bind/db.local /etc/bind/zones/foreman.de
+ $ cp /etc/bind/db.127 /etc/bind/zones/foreman.de.rev
 ```
 
 --- 
 
 - edit `/etc/bind/zones/foreman.de`:
->```
+>```yaml
 >############################################################################################################
 >#                                        /etc/bind/zones/foreman.de
 >#############################################################################################################                                                                                         
@@ -169,7 +170,7 @@
 
 - edit `/etc/bind/zones/foreman.de.rev`
 
->```
+>```yaml
 >############################################################################################################
 >#                                        /etc/bind/zones/foreman.de.rev
 >#############################################################################################################                                                                                         
@@ -196,12 +197,15 @@
 ---
 
   ***restart/refresh DNS***
-```Bash
-# named-checkzone foreman.de /etc/bind/zones/foreman.de
-# named-checkzone foreman.de /etc/bind/zones/foreman.de.rev
-# named-checkconf /etc/bind/named.conf.options
-# named-checkconf
-# sudo systemctl restart bind9
+```bash
+$ named-checkzone foreman.de /etc/bind/zones/foreman.de
+$ named-checkzone foreman.de /etc/bind/zones/foreman.de.rev
+$ named-checkconf /etc/bind/named.conf.options
+$ named-checkconf
+$ sudo systemctl restart bind9
 ```  
 
 ---
+
+ | [Knowledge Base](https://ji-podhead.github.io/Network-Guides/DNS/Knowledge%20Base)| [Install](https://ji-podhead.github.io/Network-Guides/DNS/install) | [Test&Debug](https://ji-podhead.github.io/Network-Guides/DNS/testAndDebug) | [Dynamic Updates & RNDC](https://ji-podhead.github.io/Network-Guides/DNS/Dynmaic_Updates_%26_RNDC) | [Attack Vectors & Scenario](https://ji-podhead.github.io/Network-Guides/DNS/attackVectorsAndScenario) | [Protection](https://ji-podhead.github.io/Network-Guides/DNS/protection) | 
+ 
