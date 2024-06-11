@@ -12,10 +12,10 @@
 ### Snooping
 - we can get the ip's of the clients  that send DNS-requests to the server
   - this is because the dns stores/caches the ips of the clients for the reverse request to speed up the connection-process
-```Bash
-dig +norecurse @192.168.122.7 foreman.de
+```bash
+$ dig +norecurse @192.168.122.7 foreman.de
 ```
->```
+>```yaml
 >; <<>> DiG 9.16.23-RH <<>> +norecurse @192.168.122.7 foreman.de
 >; (1 server found)
 >;; global options: +cmd
