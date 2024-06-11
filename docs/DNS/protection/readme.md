@@ -26,8 +26,8 @@ Let's consider a scenario where you're setting up a DNS server using BIND9. To m
 - Generate a Key: First, generate a shared secret key for TSIG authentication. 
 - This can be done using the dnssec-keygen tool:
 
-```Bash
-# dnssec-keygen -a HMAC-SHA512 -b 128 -n HOST mykey
+```bash
+$ dnssec-keygen -a HMAC-SHA512 -b 128 -n HOST mykey
 ```
 
 > This command generates a pair of keys (`mykey.+165+000001.private`, `mykey.+165+000001.key`) and a key file (`Kmykey.+165+000001.key`) that you'll use for TSIG authentication.
@@ -35,7 +35,7 @@ Let's consider a scenario where you're setting up a DNS server using BIND9. To m
    ***Configure TSIG Authentication in BIND9:***
    >  Edit your named.conf file to include the generated key and configure TSIG authentication for your zone transfers and dynamic updates.
     
-```
+```yaml
 key "mykey" {
     algorithm hmac-sha512;
     secret "your_generated_key_here";
@@ -102,7 +102,7 @@ Depending on the configuration, the modified response could lead to a safe locat
 
 ***how to***
 - create a file called `blocked.domains.db`
->```
+>```yaml
 >$TTL    86400
 >@       IN      SOA     ns.example.com. admin.example.com. (
  >                     2024060801 ; Serial
@@ -121,15 +121,15 @@ Depending on the configuration, the modified response could lead to a safe locat
 
 - restart the server:
 
->  ```Bash 
->sudo nano /etc/bind/named.conf
+>  ```bash 
+>$ sudo nano /etc/bind/named.conf
 >``` 
 
 - try to fetch it:
->```Bash
->dig @localhost badsite
+>```bash
+>$ dig @localhost badsite
 >```
->  >```
+>  >```yaml
 >  >;; ANSWER SECTION:
 >  >badsite.                86400    IN      CNAME   .
 >  >```
