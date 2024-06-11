@@ -15,8 +15,8 @@
 - [***3. debug:***](https://ji-podhead.github.io/Network-Guides/DNS/testAndDebug)
 > we learn how to debug our dns using dig, nameserver logs, etc
 - [***4. Dynamic Updates & RNDC***](https://ji-podhead.github.io/Network-Guides/DNS/Dynmaic_Updates_%26_RNDC)
-> we configure our dhcp in combination with a RNDC.key
-> we setup bind to use `Authentication for Dynamic Updates`
+>  - we configure our dhcp in combination with a RNDC.key
+>  - we setup bind to use `Authentication for Dynamic Updates`
 - [***5. attack vectors:***](https://ji-podhead.github.io/Network-Guides/DNS/attackVectorsAndScenario)
 > how to hack a dns and what are  possible attack scenarios 
 - [***6 .protection:***](https://ji-podhead.github.io/Network-Guides/DNS/protection)
