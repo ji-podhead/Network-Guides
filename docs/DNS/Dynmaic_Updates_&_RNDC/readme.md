@@ -10,10 +10,10 @@
 
  ## Dynamic Updates & RNDC
  - create a rdnc key
-  ```Bash
-   #  echo rndc-confgen >> /etc/bind/rndc.conf
-   #  chmod 660 /etc/bind/rndc.conf
-   #  chown root:bind /etc/bind/rndc.conf
+  ```bash
+   $  echo rndc-confgen >> /etc/bind/rndc.conf
+   $  chmod 660 /etc/bind/rndc.conf
+   $  chown root:bind /etc/bind/rndc.conf
   ```
 
 ---
@@ -173,8 +173,8 @@ subnet 192.168.122.0 netmask 255.255.255.0 {
 ---
 
 ***edit AppArmor*** *(if you fail to restart isc-dhcp)*
-```Bash
-# sudo nano /etc/apparmor.d/usr.sbin.dhcpd  
+```bash
+$ sudo nano /etc/apparmor.d/usr.sbin.dhcpd  
 ```
 > add 
 > ```perl
@@ -184,28 +184,28 @@ subnet 192.168.122.0 netmask 255.255.255.0 {
 
 restart AppArmor:
 
-```Bash
-# apparmor_parser -r /etc/apparmor.d/usr.sbin.dhcpd  
+```bash
+$ apparmor_parser -r /etc/apparmor.d/usr.sbin.dhcpd  
 ```
 
 ---
 
   ***restart/refresh DNS & DHCP***
-```Bash
-# named-checkzone foreman.de /etc/bind/zones/foreman.de
-# named-checkzone foreman.de /etc/bind/zones/foreman.de.rev
-# named-checkconf /etc/bind/named.conf.options
-# named-checkconf
-# sudo systemctl restart bind9
-# sudo systemctl restart isc-dhcp-server
+```bash
+$ named-checkzone foreman.de /etc/bind/zones/foreman.de
+$ named-checkzone foreman.de /etc/bind/zones/foreman.de.rev
+$ named-checkconf /etc/bind/named.conf.options
+$ named-checkconf
+$ sudo systemctl restart bind9
+$ sudo systemctl restart isc-dhcp-server
 ```  
 ---
 
 ***check if it works***
 
-```Bash
-# nslookup 192.168.122.20 localhost
-# nslookup foreman.de 
+```bash
+$ nslookup 192.168.122.20 localhost
+$ nslookup foreman.de 
 ```
 
 ---
