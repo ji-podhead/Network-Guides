@@ -22,6 +22,7 @@
 ### edit your configs accordingly:
 
 ***named.conf***
+
 > `/etc/bind/named.conf
 
 ```yaml
@@ -32,6 +33,7 @@ include "/etc/bind/named.conf.default-zones";
 ---
 
 ***named.conf.local***
+
 > `/etc/bind/named.conf.local`
 
 ```yaml
