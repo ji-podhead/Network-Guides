@@ -21,8 +21,8 @@
 
 ***wget:***
 
-```Bash
-#  wget foreman.de
+```bash
+$  wget foreman.de
 ```
 
 > this doesnt show us which dns is currently used, but it show us the Domain that the DNS resolved for us 
@@ -43,8 +43,8 @@
 ---
 
 ***dig:***
-```Bash
- # dig foreman.de
+```bash
+ $ dig foreman.de
 ```
 > this also tells us which DNS resolved our IP
 >```
@@ -76,8 +76,8 @@
 ---
 
 ***dump the tcp-logs for port 53:***
-```Bash
-sudo tcpdump udp port 53 --interface virbr0 -vv
+```bash
+$ sudo tcpdump udp port 53 --interface virbr0 -vv
 ```
 > - we use `virbr0` since its the network bridge the machine of our DNS-host requries, since its also running proxmox
 > - is use my mobile phone here to access the internet, so the other DNS that's inside my resolv.conf will be ignored
@@ -94,8 +94,8 @@ sudo tcpdump udp port 53 --interface virbr0 -vv
 
 ### DNS-HOST debug
 ***tail the logs of your nameserver:***
-```Bash
-journalctl -u named.service -f
+```bash
+$ journalctl -u named.service -f
 ```
 > ***DNS-Request via `browser`:***
 >
@@ -117,8 +117,8 @@ journalctl -u named.service -f
 
 ***Dump the cache:***
  - bind stores its cache in the ram, but you can dump it using 
-```Bash
-rndc dumpdb > named_dump.db
+```bash
+$ rndc dumpdb > named_dump.db
 ```
 - you can also flush it using rndc
 
