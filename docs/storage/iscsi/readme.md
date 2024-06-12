@@ -29,6 +29,8 @@
 >$ sudo systemctl enable target
 >```
 
+---
+
 ### Debian
 
 >```bash
@@ -44,7 +46,7 @@
 >$ sudo systemctl enable --now ssh
 >
 
-
+---
 
 
 ### creating a iscsi target without scst-project
@@ -85,7 +87,9 @@ sudo targetcli
 - add the required information including the required iscsi-adress
 > - in our example adress would be `iqn.2006-04.com.example:444`
 
-### scst project
+---
+
+### SCST Project
 
 clone the repo:
 
