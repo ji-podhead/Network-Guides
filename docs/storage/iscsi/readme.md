@@ -63,10 +63,23 @@ sudo targetcli
 
 ### scst project
 
-clone the repo and install:
+clone the repo:
+
 ```bash
 $ git clone https://github.com/SCST-project/scst.git
 $ cd scst
+```
+or
+
+```bash
+$ wget https://github.com/SCST-project/scst/archive/refs/tags/v3.8.tar.gz
+$ tar -xzf v3.8.tar.gz
+$ cd scst-3.8
+```
+
+***install***
+
+```bash
 $ make menuconfig
 $ make
 $ sudo make install
