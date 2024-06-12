@@ -32,6 +32,13 @@
 
 ----
 
+## Storage
+
+***1. ZFS Pool in Proxmox***
+***2. ISCSI synced with Proxmox using SCST-project***
+
+---
+
 > ***Roadmap***
 > - we learn how and why to prevent our personal data from snooping-attacks and datamining
 >   - this is the basis to setup cloud9 to avoid public DNS queries and therefore a huge attack-vector
