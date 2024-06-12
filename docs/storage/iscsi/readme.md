@@ -59,4 +59,17 @@ sudo targetcli
 ***add portal to proxmox***
 ` Datacenter -> Storage -> Add -> iSCSI.`
 - add the required information including the required iscsi-adress
-> - in our example adress would be `iqn.2006-04.com.example:444` 
+> - in our example adress would be `iqn.2006-04.com.example:444`
+
+### scst project
+
+clone the repo and install:
+```bash
+$ git clone https://github.com/SCST-project/scst.git
+$ cd scst
+$ make menuconfig
+$ make
+$ sudo make install
+```
+
+
