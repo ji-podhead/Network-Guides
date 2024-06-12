@@ -41,7 +41,7 @@
 >$ sudo apt install tgt
 >```
 > - not sure if ssh was required, but i guess so
->bash```
+>```bash
 >$ sudo apt install openssh-server
 >$ sudo systemctl enable --now ssh
 >
