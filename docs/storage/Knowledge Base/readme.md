@@ -115,6 +115,7 @@ Both SAN and NAS are methods of storing data in a network environment, but they 
 
 
 ---
+
 ## Distributed Storage 
 
 Distributed storage systems spread data across multiple nodes in a cluster to enhance scalability, reliability, and fault tolerance. This document focuses on Distributed Block Storage, where data is stored in blocks and managed independently.
