@@ -18,7 +18,9 @@ Replication in computing involves sharing information to ensure consistency betw
 
 
 ---
+
 ## Race Conditions and Locking
+
 - this is not really network related but we are facing similar issues in networking!
   
 Race conditions occur when two or more threads access shared data concurrently, and the outcome of the execution depends on the particular order in which the access takes place.<br> To prevent race conditions, ***synchronization mechanisms*** such as ***locks (also known as mutexes)*** are used.<br>
@@ -43,6 +45,7 @@ High Availability (HA) refers to systems designed to continue operating without 
 - **Failover Mechanisms**: Automatically switch operations to a standby component when a primary component fails.
 
 ### Types of HA Solutions
+
 ***Active-Passive HA***
 > In an active-passive setup, one server actively handles requests while the other remains idle until it takes over in case of a failure.
 
@@ -54,86 +57,83 @@ High Availability (HA) refers to systems designed to continue operating without 
 
 
 ---
+
 ## SAN (Storage Area Network) vs NAS (Network Attached Storage)
 
 Both SAN and NAS are methods of storing data in a network environment, but they serve different purposes and are used in different scenarios.
 
-<div>
-<table style="border-collapse: collapse; width: 100%;">
-    <tr>
-        <td style="width: 50%; vertical-align: top;">
-            <table>
-                <tr>
-                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">SAN (Storage Area Network)</th>
-                </tr>
-                <tr>
-                    <td><strong>Definition</strong></td>
-                    <td> A Storage Area Network (SAN) is a dedicated network that provides block-level data storage to servers so they appear as locally attached devices.<br>  SANs are primarily used to enhance storage devices, such as disk arrays and tape libraries, accessible to servers.</td>
-                </tr>
-                <tr>
-                    <td><strong>Use Cases</strong></td>
-                    <td>SANs are ideal for applications requiring high-speed, low-latency access to storage, such as databases, 
-                     <br> email servers, and virtualization environments.</td>
-                </tr>
-                <tr>
-                    <td><strong>Architecture</strong></td>
-                    <td>SANs typically use Fibre Channel (FC) or Internet Small Computer System Interface (iSCSI) protocols for connectivity.</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 50%; vertical-align: top;">
-            <table>
-                <tr>
-                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">NAS (Network Attached Storage)</th>
-                </tr>
-                <tr>
-                    <td><strong>Definition</strong></td>
-                    <td>Network Attached Storage (NAS) is a dedicated file-level data storage device that operates on a computer network.<br>
-                     It allows multiple users and heterogeneous client devices to retrieve data from centralized disk capacity.</td>
-                </tr>
-                <tr>
-                    <td><strong>Use Cases</strong></td>
-                    <td>NAS is suitable for file sharing, collaboration, and backup purposes, where file-level access is preferred over block-level access.</td>
-                </tr>
-                <tr>
-                    <td><strong>Architecture</strong></td>
-                    <td>NAS devices connect to the network using TCP/IP networking protocols and offer file-level access to the networked computers.</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 50%; vertical-align: top;">
-            <table>
-                <tr>
-                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Comparison</th>
-                </tr>
-                <tr>
-                    <td><strong>Access Level</strong></td>
-                    <td>SAN offers block-level access, making it faster for certain types of applications, <br> 
-                     while NAS provides file-level access, which is more suited for general-purpose file sharing.
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Protocol</strong></td>
-                    <td>SAN commonly uses FC or iSCSI, whereas NAS uses NFS (for Unix/Linux) or SMB/CIFS (for Windows).</td>
-                </tr>
-                <tr>
-                    <td><strong>Purpose</strong></td>
-                    <td>SAN is focused on high-performance storage for critical applications, while NAS is designed for efficient file sharing and collaboration.</td>
-                </tr>
-                <tr>
-                    <td><strong>Cost</strong></td>
-                    <td>SAN solutions can be more expensive due to the need for specialized hardware and cabling, <br>
-                     whereas NAS devices are generally less costly and can leverage existing network infrastructure.</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+<div style="max-width: 800px; margin: auto;">
+    <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+            <td style="width: 50%; vertical-align: top;">
+                <table>
+                    <tr>
+                        <th colspan="2" style="background-color: #f0f0f0; text-align: center;">SAN (Storage Area Network)</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Definition</strong></td>
+                        <td>A Storage Area Network (SAN) is a dedicated network that provides block-level data storage to servers so they appear as locally attached devices.<br> SANs are primarily used to enhance storage devices, such as disk arrays and tape libraries, accessible to servers.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Use Cases</strong></td>
+                        <td>SANs are ideal for applications requiring high-speed, low-latency access to storage, such as databases, email servers, and virtualization environments.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architecture</strong></td>
+                        <td>SANs typically use Fibre Channel (FC) or Internet Small Computer System Interface (iSCSI) protocols for connectivity.</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%; vertical-align: top;">
+                <table>
+                    <tr>
+                        <th colspan="2" style="background-color: #f0f0f0; text-align: center;">NAS (Network Attached Storage)</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Definition</strong></td>
+                        <td>Network Attached Storage (NAS) is a dedicated file-level data storage device that operates on a computer network.<br> It allows multiple users and heterogeneous client devices to retrieve data from centralized disk capacity.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Use Cases</strong></td>
+                        <td>NAS is suitable for file sharing, collaboration, and backup purposes, where file-level access is preferred over block-level access.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architecture</strong></td>
+                        <td>NAS devices connect to the network using TCP/IP networking protocols and offer file-level access to the networked computers.</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%; vertical-align: top;">
+                <table>
+                    <tr>
+                        <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Comparison</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Access Level</strong></td>
+                        <td>SAN offers block-level access, making it faster for certain types of applications, while NAS provides file-level access, which is more suited for general-purpose file sharing.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Protocol</strong></td>
+                        <td>SAN commonly uses FC or iSCSI, whereas NAS uses NFS (for Unix/Linux) or SMB/CIFS (for Windows).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Purpose</strong></td>
+                        <td>SAN is focused on high-performance storage for critical applications, while NAS is designed for efficient file sharing and collaboration.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cost</strong></td>
+                        <td>SAN solutions can be more expensive due to the need for specialized hardware and cabling, whereas NAS devices are generally less costly and can leverage existing network infrastructure.</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </div>
+
 
 ---
 ## Distributed Storage 
@@ -151,6 +151,7 @@ Object storage is designed for storing unstructured data, such as images, videos
 File storage systems manage data as files within a hierarchical namespace. They are optimized for file-based access patterns but can also support block-level access through protocols like NFS or SMB.
 
 ***Distributed Block Storage***
+
 <div align="center">
  <div style="display: flex; flex-direction: col; ">
   <p>Block storage divides data into fixed-size blocks, which are managed independently. <br> Each block can be stored on a separate physical drive, allowing for flexible scaling and high performance.</p>
@@ -160,49 +161,50 @@ File storage systems manage data as files within a hierarchical namespace. They 
 
 
 ***examples***
-<table style="border-collapse: collapse; width: 100%;">
-    <tr>
-        <td style="width: 50%; vertical-align: top;">
-            <table>
-             <tr>
-             <td style="background-color: #f0f0f0; text-align: center;">name</th>
-             <td style="background-color: #f0f0f0; text-align: center;">description</th>
-             </tr>     
-             <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>DRBD</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">Mirrors blockstorage so multiple nodes can use it safely (slow).</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Ceph</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">A highly scalable, open-source software-defined storage platform. <br>
-                     Supports object, block, and file storage modes.
-                    </td>
-                  </tr>
-                   <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>GlusterFS</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">A scalable network filesystem that allows for the creation of large, distributed storage solutions..</td>
+<div style="max-width: 800px; margin: auto;">
+    <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+            <td style="width: 50%; vertical-align: top;">
+                <table>
+                    <tr>
+                        <td style="background-color: #f0f0f0; text-align: center;">Name</td>
+                        <td style="background-color: #f0f0f0; text-align: center;">Description</td>
                     </tr>
-                     <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>OpenEBS</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;"> Provides container-native block storage solutions for Kubernetes environments..</td>
-                </tr>
-                 <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Amazon S3</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;"> A widely-used object storage service that provides scalable storage for data objects..</td>
-                </tr>
-                 <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Google Cloud Storage</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">Similar to Amazon S3, offering durable, secure, and scalable object storage..</td>
-                </tr>
-                 <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Hadoop HDFS</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ddd;"> Designed for storing very large files across multiple machines, providing high aggregate bandwidth through data parallelism.
-</td>
-                </tr>
-            </table>
-    </tr>
-</table>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>DRBD</strong></td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Mirrors blockstorage so multiple nodes can use it safely (slow).</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Ceph</strong></td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">A highly scalable, open-source software-defined storage platform. <br>
+                         Supports object, block, and file storage modes.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>GlusterFS</strong></td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">A scalable network filesystem that allows for the creation of large, distributed storage solutions.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>OpenEBS</strong></td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Provides container-native block storage solutions for Kubernetes environments.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Amazon S3</strong></td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">A widely-used object storage service that provides scalable storage for data objects.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Google Cloud Storage</strong></td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Similar to Amazon S3, offering durable, secure, and scalable object storage.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Hadoop HDFS</strong></td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Designed for storing very large files across multiple machines, providing high aggregate bandwidth through data parallelism.</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </div>
+
 
 ***comparison***
 | Type       | Use Case                                                                                   | Example                          |
@@ -283,41 +285,44 @@ Understanding these distinctions helps in selecting the appropriate technology f
 
 NFS (Network File System) is a distributed file system protocol that allows a system to share directories and files with others over a network. It enables users to access files on remote systems as if they were local.
 
-<div>
-<table style="border-collapse: collapse; width: 100%;">
-    <tr>
-        <td style="width: 50%; vertical-align: top;">
-            <table>
-                <tr>
-                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
-                </tr>
-                <tr>
-                    <td><strong>File Sharing Protocol</strong></td>
-                    <td>NFS facilitates file sharing by allowing users to access files located on remote servers as if they were local to their own workstation.</td>
-                </tr>
-                <tr>
-                    <td><strong>Cross-Platform Compatibility</strong></td>
-                    <td>NFS is cross-platform, supporting various operating systems, making it a versatile choice for mixed-environment networks.</td>
-                </tr>
-                <tr>
-                    <td><strong>Performance Optimization</strong></td>
-                    <td>NFS versions 4.x introduce improvements in performance and scalability, addressing limitations found in earlier versions.</td>
-                </tr>
-                <tr>
-                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Operational Modes</th>
-                </tr>
-                <tr>
-                    <td><strong>Client and Server Roles</strong></td>
-                    <td>In an NFS setup, one system acts as the server hosting the shared files, and other systems act as clients accessing those files.</td>
-                </tr>
-                <tr>
-                    <td><strong>Read-Only and Read-Write Access</strong></td>
-                    <td>NFS can configure shares to be read-only or read-write, depending on the permissions required for the shared files.</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+<div style="max-width: 800px; margin: auto;">
+    <h2>NFS (Network File System)</h2>
+    <p>NFS (Network File System) is a distributed file system protocol that allows a system to share directories and files with others over a network. It enables users to access files on remote systems as if they were local.</p>
+    
+    <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+            <td style="width: 50%; vertical-align: top;">
+                <table>
+                    <tr>
+                        <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
+                    </tr>
+                    <tr>
+                        <td><strong>File Sharing Protocol</strong></td>
+                        <td>NFS facilitates file sharing by allowing users to access files located on remote servers as if they were local to their own workstation.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cross-Platform Compatibility</strong></td>
+                        <td>NFS is cross-platform, supporting various operating systems, making it a versatile choice for mixed-environment networks.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance Optimization</strong></td>
+                        <td>NFS versions 4.x introduce improvements in performance and scalability, addressing limitations found in earlier versions.</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Operational Modes</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Client and Server Roles</strong></td>
+                        <td>In an NFS setup, one system acts as the server hosting the shared files, and other systems act as clients accessing those files.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Read-Only and Read-Write Access</strong></td>
+                        <td>NFS can configure shares to be read-only or read-write, depending on the permissions required for the shared files.</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </div>
 
 ---
