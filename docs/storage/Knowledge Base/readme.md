@@ -9,6 +9,21 @@
 
  | [Knowledge Base](https://ji-podhead.github.io/Network-Guides/storage/Knowledge%20Base)| [ZFS & Proxmox](https://ji-podhead.github.io/Network-Guides/storage/zfs&proxmox) | [ISCSI & Proxmox & SCST](https://ji-podhead.github.io/Network-Guides/storage/iscsi) |
  
+## Replication in Computing
+
+Replication in computing involves sharing information to ensure consistency between redundant resources, such as software or hardware components, to improve reliability, fault-tolerance, or accessibility.
+
+### Terminology
+
+- **Data Replication**: Where the same data is stored on multiple storage devices.
+- **Computation Replication**: Where the same computing task is executed many times. Computational tasks may be:
+
+### Replication Models in Distributed Systems
+
+- **State Machine Replication**: Assumes that the replicated process is a deterministic finite automaton and that atomic broadcast of every event is possible. It is based on distributed consensus and has a great deal in common with the transactional replication model.
+- **Virtual Synchrony**: Involves a group of processes which cooperate to replicate in-memory data or to coordinate actions. The model defines a distributed entity called a process group.
+
+---
 
 ## High Availability (HA) in Networking
 
@@ -32,7 +47,27 @@ High Availability (HA) refers to systems designed to continue operating without 
 > N+M redundancy involves having N active servers and M standby servers ready to take over in case of failures, providing a higher level of availability.
 
 ---
+## Split Brain Scenario
 
+The Split Brain Scenario refers to a situation in distributed systems where two or more nodes believe they are the sole coordinator or master of the system, leading to potential data inconsistencies and conflicts. This can occur in high-availability (HA) clusters, particularly when using shared storage technologies like SAN, iSCSI, or FCoE, where network partitions may cause nodes to lose communication with each other.
+
+### Key Characteristics
+
+- **Isolation of Nodes**: In a Split Brain Scenario, nodes become isolated from each other, often due to network failures or misconfigurations, leading to a state where each node believes it is the only active node.
+- **Data Inconsistency**: Without proper coordination or fencing mechanisms, these isolated nodes may continue to accept write operations independently, resulting in duplicate entries or lost updates, compromising data integrity.
+- **Risk of Data Loss or Corruption**: Over time, this can lead to significant data loss or corruption, as the system's state diverges between the nodes.
+
+### Mitigation Strategies
+
+- **Fencing Mechanisms**: Implementing fencing mechanisms, such as STONITH (Shoot The Other Node In The Head) or SBD (STONITH Block Device), to physically isolate malfunctioning nodes from the shared storage, preventing them from accepting write operations.
+- **Quorum Algorithms**: Utilizing quorum algorithms to determine the majority state of the cluster, ensuring that only the majority of nodes agree on the current state, thereby preventing conflicting operations.
+- **Watchdog Timers**: Employing watchdog timers on each node to detect and remove nodes that fail to respond, ensuring that only responsive nodes participate in the cluster operation.
+
+### Importance in High-Availability Systems
+
+In high-availability systems, mitigating the Split Brain Scenario is crucial for maintaining data integrity and system stability. Proper configuration of fencing mechanisms, along with vigilant monitoring and timely intervention, are essential to prevent this scenario from occurring and to quickly recover from it if it does.
+
+---
 
 ## Distributed Storage 
 
@@ -153,91 +188,179 @@ Understanding these distinctions helps in selecting the appropriate technology f
 
 NFS (Network File System) is a distributed file system protocol that allows a system to share directories and files with others over a network. It enables users to access files on remote systems as if they were local.
 
-***File Sharing Protocol***
-- NFS facilitates file sharing by allowing users to access files located on remote servers as if they were local to their own workstation.
-
-***Cross-Platform Compatibility***
-- NFS is cross-platform, supporting various operating systems, making it a versatile choice for mixed-environment networks.
-
-***Performance Optimization***
-- NFS versions 4.x introduce improvements in performance and scalability, addressing limitations found in earlier versions.
-
-### Operational Modes
-
-***Client and Server Roles***
-- In an NFS setup, one system acts as the server hosting the shared files, and other systems act as clients accessing those files.
-
-***Read-Only and Read-Write Access***
-- NFS can configure shares to be read-only or read-write, depending on the permissions required for the shared files.
+<div>
+<table style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <td style="width: 50%; vertical-align: top;">
+            <table>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
+                </tr>
+                <tr>
+                    <td><strong>File Sharing Protocol</strong></td>
+                    <td>NFS facilitates file sharing by allowing users to access files located on remote servers as if they were local to their own workstation.</td>
+                </tr>
+                <tr>
+                    <td><strong>Cross-Platform Compatibility</strong></td>
+                    <td>NFS is cross-platform, supporting various operating systems, making it a versatile choice for mixed-environment networks.</td>
+                </tr>
+                <tr>
+                    <td><strong>Performance Optimization</strong></td>
+                    <td>NFS versions 4.x introduce improvements in performance and scalability, addressing limitations found in earlier versions.</td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Operational Modes</th>
+                </tr>
+                <tr>
+                    <td><strong>Client and Server Roles</strong></td>
+                    <td>In an NFS setup, one system acts as the server hosting the shared files, and other systems act as clients accessing those files.</td>
+                </tr>
+                <tr>
+                    <td><strong>Read-Only and Read-Write Access</strong></td>
+                    <td>NFS can configure shares to be read-only or read-write, depending on the permissions required for the shared files.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
 
 ---
+
+
+
 
 ## iSCSI 
 
 iSCSI (Internet Small Computer System Interface) is a protocol that allows for the transport of block-level data over IP networks. It enables the creation of storage area networks (SANs) by allowing remote servers to access storage as if it were locally attached.
 
-***Remote Storage Access***
-- iSCSI allows for the presentation of remote storage devices to the operating system as if they were locally connected, enabling direct access to storage over the network.
+<div>
+<table style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <td style="width: 50%; vertical-align: top;">
+            <table>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
+                </tr>
+                <tr>
+                    <td><strong>Remote Storage Access</strong></td>
+                    <td>iSCSI allows for the presentation of remote storage devices to the operating system as if they were locally connected,<br>
+                     enabling direct access to storage over the network.</td>
+                </tr>
+                <tr>
+                    <td><strong>Compatibility with Existing Infrastructure</strong></td>
+                    <td>Since iSCSI operates over standard Ethernet connections, it can leverage existing network infrastructure, <br>
+                     reducing the need for specialized hardware.</td>
+                </tr>
+                <tr>
+                    <td><strong>Cost-Effective SAN Solutions</strong></td>
+                    <td>By using iSCSI, organizations can build SANs without the high cost associated with Fibre Channel technology, <br>
+                     making it an attractive option for budget-conscious deployments.</td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Operational Modes</th>
+                </tr>
+                <tr>
+                    <td><strong>Target and Initiator Roles</strong></td>
+                    <td>In an iSCSI setup, devices that provide storage are referred to as targets, while devices that request access to the storage are initiators. <br>
+                     Targets and initiators communicate over the network to facilitate data transfer.</td>
+                </tr>
+                <tr>
+                    <td><strong>Multipath Support</strong></td>
+                    <td>iSCSI supports multipathing, allowing data to be accessed through multiple paths for redundancy and increased reliability.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
 
-***Compatibility with Existing Infrastructure***
-- Since iSCSI operates over standard Ethernet connections, it can leverage existing network infrastructure, reducing the need for specialized hardware.
-
-***Cost-Effective SAN Solutions***
-- By using iSCSI, organizations can build SANs without the high cost associated with Fibre Channel technology, making it an attractive option for budget-conscious deployments.
-
-### Operational Modes
-
-***Target and Initiator Roles***
-- In an iSCSI setup, devices that provide storage are referred to as targets, while devices that request access to the storage are initiators. Targets and initiators communicate over the network to facilitate data transfer.
-
-***Multipath Support***
-- iSCSI supports multipathing, allowing data to be accessed through multiple paths for redundancy and increased reliability.
 ---
 ## ZFS 
 
 ZFS (Zettabyte File System) is a combined file system and logical volume manager designed by Sun Microsystems. It stands out for its advanced features such as snapshotting, replication, automatic repair, and data compression.
+<div>
+<table style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <td style="width: 50%; vertical-align: top;">
+            <table>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
+                </tr>
+                <tr>
+                    <td><strong>Integrated Data Protection</strong></td>
+                    <td>ZFS employs robust data protection mechanisms, including checksums for data integrity and RAID-Z for fault tolerance.</td>
+                </tr>
+                <tr>
+                    <td><strong>Snapshots and Clones</strong></td>
+                    <td>It supports instant snapshots of the file system, facilitating easy backups and version control.</td>
+                </tr>
+                <tr>
+                    <td><strong>Compression</strong></td>
+                    <td>ZFS integrates built-in compression algorithms to reduce storage space requirements.</td>
+                </tr>
+                <tr>
+                    <td><strong>RAID-Z</strong></td>
+                    <td>Offers a RAID level specifically designed for ZFS, providing data protection without parity overhead.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
 
-***Integrated Data Protection***
-- ZFS employs robust data protection mechanisms, including checksums for data integrity and RAID-Z for fault tolerance.
-
-***Snapshots and Clones***
-- It supports instant snapshots of the file system, facilitating easy backups and version control.
-
-***Compression***
-- ZFS integrates built-in compression algorithms to reduce storage space requirements.
-
-***RAID-Z***
-- Offers a RAID level specifically designed for ZFS, providing data protection without parity overhead.
 
 ---
 
----
+
 ## Gluster FS 
 GlusterFS is designed with modularity in mind and supports multiple operational modes:
 
-***Standalone Storage***
-- A single server that provides the file system over the network, similar to NFS.
-
-***Distributed Storage***
-- Multiple servers store and distribute data among themselves and provide it to clients.
-
-***Replicated Storage***
-- Multiple servers mirror data among themselves and provide it to clients.
-
-***Distributed Replicated Storage***
-- Multiple servers store and replicate data among themselves, distributing it to clients.
-
-***Striped Storage***
-- Multiple servers stripe data to deliver higher performance and disk I/O bandwidth.
-
-***Cloud/HPC Storage***
-- Similar to Distributed Replicated Storage.
-
-***NFS-like Standalone Storage Server-2***
-- Similar to Standalone Storage, but more than one file system is provided.
-
-***Aggregating Three Storage Servers with Unify***
-- Three servers that provide a unified file system via Unify, without redundancy.
+<div>
+<table style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <td style="width: 50%; vertical-align: top;">
+            <table>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
+                </tr>
+                <tr>
+                    <td><strong>Standalone Storage</strong></td>
+                    <td>A single server that provides the file system over the network, similar to NFS.</td>
+                </tr>
+                <tr>
+                    <td><strong>Distributed Storage</strong></td>
+                    <td>Multiple servers store and distribute data among themselves and provide it to clients.</td>
+                </tr>
+                <tr>
+                    <td><strong>Replicated Storage</strong></td>
+                    <td>Multiple servers mirror data among themselves and provide it to clients.</td>
+                </tr>
+                <tr>
+                    <td><strong>Distributed Replicated Storage</strong></td>
+                    <td>Multiple servers store and replicate data among themselves, distributing it to clients.</td>
+                </tr>
+                <tr>
+                    <td><strong>Striped Storage</strong></td>
+                    <td>Multiple servers stripe data to deliver higher performance and disk I/O bandwidth.</td>
+                </tr>
+                <tr>
+                    <td><strong>Cloud/HPC Storage</strong></td>
+                    <td>Similar to Distributed Replicated Storage.</td>
+                </tr>
+                <tr>
+                    <td><strong>NFS-like Standalone Storage Server-2</strong></td>
+                    <td>Similar to Standalone Storage, but more than one file system is provided.</td>
+                </tr>
+                <tr>
+                    <td><strong>Aggregating Three Storage Servers with Unify</strong></td>
+                    <td>Three servers that provide a unified file system via Unify, without redundancy.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
 
 ---
 
@@ -267,24 +390,46 @@ DRBD (Distributed Replicated Block Device) is a distributed storage system that 
 
 > DRBD devices are usually readable and writable from only one node at a time, promoting a Primary/Secondary model. This model is beneficial for database workloads and virtual machine root disks. Ceph, on the other hand, supports concurrent access to the same file system from many hosts, making it suitable for disk-image stores and large-file-sized data.
 
-***Mirroring Across Nodes***
-- DRBD mirrors data across nodes, ensuring data consistency and availability even in the event of node failures.
+<div>
+<table style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <td style="width: 50%; vertical-align: top;">
+            <table>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
+                </tr>
+                <tr>
+                    <td><strong>Mirroring Across Nodes</strong></td>
+                    <td>DRBD mirrors data across nodes, ensuring data consistency and availability even in the event of node failures.</td>
+                </tr>
+                <tr>
+                    <td><strong>Network-Based Storage</strong></td>
+                    <td>It treats network storage as a local block device, simplifying the management of remote storage.</td>
+                </tr>
+                <tr>
+                    <td><strong>Automatic Failover and Recovery</strong></td>
+                    <td>DRBD can automatically switch between primary and secondary nodes, minimizing downtime and manual intervention.</td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Operational Modes</th>
+                </tr>
+                <tr>
+                    <td><strong>Active-Passive Mode</strong></td>
+                    <td>Typically, DRBD operates in an active-passive mode, where one node is the primary (active) and others are secondary (passive). <br>This mode is straightforward and ensures data integrity.</td>
+                </tr>
+                <tr>
+                    <td><strong>Active-Active Mode</strong></td>
+                    <td>With advanced configurations, DRBD can operate in an active-active mode,<br> allowing concurrent access to the same block device from multiple nodes.<br> This mode requires careful synchronization to prevent conflicts.</td>
+                </tr>
+                <tr>
+                    <td><strong>Block Devices and Distribution of Storage</strong></td>
+                    <td>DRBD provisions block device resources on partitions in a RAID-1 like manner across cluster nodes, ensuring data redundancy. <br> Ceph's RADOS Block Device (RBD) creates storage objects distributed within the RADOS cluster, <br> presenting a highly scalable solution but with computational overhead for determining read/write locations.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
 
-***Network-Based Storage***
-- It treats network storage as a local block device, simplifying the management of remote storage.
 
-***Automatic Failover and Recovery***
-- DRBD can automatically switch between primary and secondary nodes, minimizing downtime and manual intervention.
-
-### Operational Modes
-
-***Active-Passive Mode***
-- Typically, DRBD operates in an active-passive mode, where one node is the primary (active) and others are secondary (passive). This mode is straightforward and ensures data integrity.
-
-***Active-Active Mode***
-- With advanced configurations, DRBD can operate in an active-active mode, allowing concurrent access to the same block device from multiple nodes. This mode requires careful synchronization to prevent conflicts.
-
-
-***Block Devices and Distribution of Storage***
-- DRBD provisions block device resources on partitions in a RAID-1 like manner across cluster nodes, ensuring data redundancy. Ceph's RADOS Block Device (RBD) creates storage objects distributed within the RADOS cluster, presenting a highly scalable solution but with computational overhead for determining read/write locations.
 
