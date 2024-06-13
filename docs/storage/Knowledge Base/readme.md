@@ -60,14 +60,6 @@ High Availability (HA) refers to systems designed to continue operating without 
 
 Both SAN and NAS are methods of storing data in a network environment, but they serve different purposes and are used in different scenarios.
 
-
-
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-</head>
-<body>
-
 <table>
     <tr>
         <th></th>
@@ -110,7 +102,6 @@ Both SAN and NAS are methods of storing data in a network environment, but they 
     </tr>
 </table>
 
-</body>
 
 
 
