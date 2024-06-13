@@ -178,8 +178,8 @@ File storage systems manage data as files within a hierarchical namespace. They 
 ---
 
 
-> ### Distributed Storage comparison
-> <div style="max-width: 800px; margin: auto;">
+>### Distributed Storage comparison
+><div style="max-width: 800px; margin: auto;">
 >    <table style="border-collapse: collapse; width: 100%;">
 >     <tr>
 >            <td><strong>Type</strong></td>
@@ -207,7 +207,7 @@ File storage systems manage data as files within a hierarchical namespace. They 
 >            <td>Ceph, GlusterFS, OpenEBS</td>
 >        </tr>
 >    </table>
-> </div>
+></div>
 
 
 ---
