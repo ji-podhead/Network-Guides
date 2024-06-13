@@ -122,61 +122,81 @@ File storage systems manage data as files within a hierarchical namespace. They 
 </div>
 
 
-***examples***
+
 
 <div style="max-width: 800px; margin: auto;">
     <table style="border-collapse: collapse; width: 100%;">
-        <tr>
             <td style="width: 50%; vertical-align: top;">
-                <table>
+                  <tr><td colspan="3"><strong>Examples</strong></td></tr>
                     <tr>
-                        <td style="background-color: #f0f0f0; text-align: center;">Name</td>
-                        <td style="background-color: #f0f0f0; text-align: center;">Description</td>
+                        <td colspan="1" style="background-color: #f0f0f0; text-align: center;">Name</td>
+                        <td colspan="2" style="background-color: #f0f0f0; text-align: center;">Description</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>DRBD</strong></td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">Mirrors blockstorage so multiple nodes can use it safely (slow).</td>
+                        <td colspan="1" style="padding: 8px; border: 1px solid #ddd;"><strong>DRBD</strong></td>
+                        <td colspan="2" style="padding: 8px; border: 1px solid #ddd;">Mirrors blockstorage so multiple nodes can use it safely (slow).</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Ceph</strong></td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">A highly scalable, open-source software-defined storage platform. <br>
+                        <td colspan="1" style="padding: 8px; border: 1px solid #ddd;"><strong>Ceph</strong></td>
+                        <td colspan="2" style="padding: 8px; border: 1px solid #ddd;">A highly scalable, open-source software-defined storage platform. <br>
                          Supports object, block, and file storage modes.</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>GlusterFS</strong></td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">A scalable network filesystem that allows for the creation of large, distributed storage solutions.</td>
+                        <td colspan="1" style="padding: 8px; border: 1px solid #ddd;"><strong>GlusterFS</strong></td>
+                        <td colspan="2" style="padding: 8px; border: 1px solid #ddd;">A scalable network filesystem that allows for the creation of large, distributed storage solutions.</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>OpenEBS</strong></td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">Provides container-native block storage solutions for Kubernetes environments.</td>
+                        <td colspan="1" style="padding: 8px; border: 1px solid #ddd;"><strong>OpenEBS</strong></td>
+                        <td colspan="2" style="padding: 8px; border: 1px solid #ddd;">Provides container-native block storage solutions for Kubernetes environments.</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Amazon S3</strong></td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">A widely-used object storage service that provides scalable storage for data objects.</td>
+                        <td colspan="1" style="padding: 8px; border: 1px solid #ddd;"><strong>Amazon S3</strong></td>
+                        <td colspan="2" style="padding: 8px; border: 1px solid #ddd;">A widely-used object storage service that provides scalable storage for data objects.</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Google Cloud Storage</strong></td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">Similar to Amazon S3, offering durable, secure, and scalable object storage.</td>
+                        <td colspan="1" style="padding: 8px; border: 1px solid #ddd;"><strong>Google Cloud Storage</strong></td>
+                        <td colspan="2" style="padding: 8px; border: 1px solid #ddd;">Similar to Amazon S3, offering durable, secure, and scalable object storage.</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Hadoop HDFS</strong></td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">Designed for storing very large files across multiple machines, providing high aggregate bandwidth through data parallelism.</td>
+                        <td colspan="1" style="padding: 8px; border: 1px solid #ddd;"><strong>Hadoop HDFS</strong></td>
+                        <td colspan="2" style="padding: 8px; border: 1px solid #ddd;">Designed for storing very large files across multiple machines, providing high aggregate bandwidth through data parallelism.</td>
                     </tr>
-                </table>
-            </td>
         </tr>
+     <tr>
+     <tr>
+      <td colspan="3"><strong>Comparison</strong></td>
+     </tr>
+     <tr>
+      <td><strong>Type</strong></td>
+      <td><strong>UseCase</strong></td>
+      <td><strong>Example</strong></td>
+     </tr>
+     <tr>
+      <td>Object</td>
+      <td>Storing unstructured data, backups, and media content</td>
+      <td> Amazon S3    </td>
+     </tr>
+      <tr>
+      <td>File</td>
+      <td>Managing structured data in a hierarchical manner  </td>
+      <td>Network Attached Storage (NAS)</td>
+     </tr>
+     <tr>
+      <td>Block</td>
+      <td>Providing raw block-level storage for databases, virtual machines, and containers  </td>
+      <td>SAN (Storage Area Network) </td>
+     </tr>
+     <tr>
+      <td>Distributed Block Storage*</td>
+      <td>Scalable, high-performance storage for cloud-native applications and big data analytics </td>
+      <td>Ceph, GlusterFS, OpenEBS</td>
+     </tr>
     </table>
 </div>
 
 
-***comparison***
 
-| Type       | Use Case                                                                                   | Example                            |
-|------------|----------------------------------------------------------------------------------------------|----------------------------------|
-| ***Object***     | Storing unstructured data, backups, and media content                                      | Amazon S3                    |
-| ***File***       | Managing structured data in a hierarchical manner                                         | Network Attached Storage (NAS)| 
-| ***Block***      | Providing raw block-level storage for databases, virtual machines, and containers           | SAN (Storage Area Network)  |
-| ***Distributed Block Storage*** | Scalable, high-performance storage for cloud-native applications and big data analytics | Ceph, GlusterFS, OpenEBS |
+
 
 ---
 
