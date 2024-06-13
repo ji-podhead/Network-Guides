@@ -11,6 +11,7 @@
  | [Knowledge Base](https://ji-podhead.github.io/Network-Guides/storage/Knowledge%20Base)| [ZFS & Proxmox](https://ji-podhead.github.io/Network-Guides/storage/zfs&proxmox) | [ISCSI & Proxmox & SCST](https://ji-podhead.github.io/Network-Guides/storage/iscsi) |
 
 # Knowledge Base
+> this section is highly motivated by the reddit thread [Can a second computer join a ZFS pool?](https://www.reddit.com/r/zfs/comments/1bqswy5/can_a_second_computer_join_a_zfs_pool/) 
  
 ## Replication in Computing
 
@@ -242,6 +243,7 @@ High Availability (HA) refers to systems designed to continue operating without 
 |-------------------------|------------------------|----------------------|
 | In an active-passive setup, one server actively handles requests while the other remains idle until it takes over in case of a failure. |  Active-active HA involves distributing workload between multiple active servers, increasing capacity and reducing single points of failure. | N+M redundancy involves having N active servers and M standby servers ready to take over in case of failures, providing a higher level of availability. |
 
+***Suse-Cloud Storage Protection:*** https://documentation.suse.com/de-de/sle-ha/15-SP2/html/SLE-HA-all/cha-ha-storage-protect.html
 
 ---
 
