@@ -13,18 +13,66 @@
 
 Replication in computing involves sharing information to ensure consistency between redundant resources, such as software or hardware components, to improve reliability, fault-tolerance, or accessibility.
 
-### Terminology
-
 - **Data Replication**: Where the same data is stored on multiple storage devices.
 - **Computation Replication**: Where the same computing task is executed many times. Computational tasks may be:
 
-### Replication Models in Distributed Systems
 
-- **State Machine Replication**: Assumes that the replicated process is a deterministic finite automaton and that atomic broadcast of every event is possible. It is based on distributed consensus and has a great deal in common with the transactional replication model.
-- **Virtual Synchrony**: Involves a group of processes which cooperate to replicate in-memory data or to coordinate actions. The model defines a distributed entity called a process group.
+---
+## Race Conditions and Locking
+
+Race conditions occur when two or more threads access shared data concurrently, and the outcome of the execution depends on the particular order in which the access takes place.<br> To prevent race conditions, ***synchronization mechanisms*** such as ***locks (also known as mutexes)*** are used.<br>
+When a thread wants to execute code within a critical section, it must first acquire the lock associated with that section. If the lock is already held by another thread, the requesting thread will block until the lock becomes available.
+
+| **Mutex** |  **Semaphore** |   **Read/Write Lock** |
+|-----------|----------------|-----------------------|
+| A mutual exclusion object that prevents simultaneous access to a resource | A variable or abstract data type used to control access to a common resource by multiple processes in a concurrent system such as a multitasking operating system. | Allows concurrent read-only access but requires exclusive access for write operations. |
+
 
 ---
 
+## High Availability (HA) in Networking
+
+High Availability (HA) refers to systems designed to continue operating without interruption during the failure of one or more components. It ensures that critical services remain available and operational under various conditions, enhancing system reliability and minimizing downtime.
+
+### Components of HA Systems
+
+- **Redundant Hardware**: Duplicate components to ensure that if one fails, another can take over seamlessly.
+- **Load Balancing**: Distributes traffic across multiple servers to prevent overload and increase efficiency.
+- **Clustering**: Groups servers together so they can share workloads and resources, improving performance and resilience.
+- **Failover Mechanisms**: Automatically switch operations to a standby component when a primary component fails.
+
+### Types of HA Solutions
+***Active-Passive HA***
+> In an active-passive setup, one server actively handles requests while the other remains idle until it takes over in case of a failure.
+
+***Active-Active HA***
+> Active-active HA involves distributing workload between multiple active servers, increasing capacity and reducing single points of failure.
+
+***N+M Redundancy***
+> N+M redundancy involves having N active servers and M standby servers ready to take over in case of failures, providing a higher level of availability.
+
+---
+## Split Brain Scenario
+
+The Split Brain Scenario refers to a situation in distributed systems where two or more nodes believe they are the sole coordinator or master of the system, leading to potential data inconsistencies and conflicts. This can occur in high-availability (HA) clusters, particularly when using shared storage technologies like SAN, iSCSI, or FCoE, where network partitions may cause nodes to lose communication with each other.
+
+### Key Characteristics
+
+- **Isolation of Nodes**: In a Split Brain Scenario, nodes become isolated from each other, often due to network failures or misconfigurations, leading to a state where each node believes it is the only active node.
+- **Data Inconsistency**: Without proper coordination or fencing mechanisms, these isolated nodes may continue to accept write operations independently, resulting in duplicate entries or lost updates, compromising data integrity.
+- **Risk of Data Loss or Corruption**: Over time, this can lead to significant data loss or corruption, as the system's state diverges between the nodes.
+
+### Mitigation Strategies
+
+- **Fencing Mechanisms**: Implementing fencing mechanisms, such as STONITH (Shoot The Other Node In The Head) or SBD (STONITH Block Device), to physically isolate malfunctioning nodes from the shared storage, preventing them from accepting write operations.
+- **Quorum Algorithms**: Utilizing quorum algorithms to determine the majority state of the cluster, ensuring that only the majority of nodes agree on the current state, thereby preventing conflicting operations.
+- **Watchdog Timers**: Employing watchdog timers on each node to detect and remove nodes that fail to respond, ensuring that only responsive nodes participate in the cluster operation.
+
+### Importance in High-Availability Systems
+
+In high-availability systems, mitigating the Split Brain Scenario is crucial for maintaining data integrity and system stability. Proper configuration of fencing mechanisms, along with vigilant monitoring and timely intervention, are essential to prevent this scenario from occurring and to quickly recover from it if it does.
+
+---
 ## SAN (Storage Area Network) vs NAS (Network Attached Storage)
 
 Both SAN and NAS are methods of storing data in a network environment, but they serve different purposes and are used in different scenarios.
@@ -107,51 +155,6 @@ Both SAN and NAS are methods of storing data in a network environment, but they 
 </div>
 
 ---
-
-## High Availability (HA) in Networking
-
-High Availability (HA) refers to systems designed to continue operating without interruption during the failure of one or more components. It ensures that critical services remain available and operational under various conditions, enhancing system reliability and minimizing downtime.
-
-### Components of HA Systems
-
-- **Redundant Hardware**: Duplicate components to ensure that if one fails, another can take over seamlessly.
-- **Load Balancing**: Distributes traffic across multiple servers to prevent overload and increase efficiency.
-- **Clustering**: Groups servers together so they can share workloads and resources, improving performance and resilience.
-- **Failover Mechanisms**: Automatically switch operations to a standby component when a primary component fails.
-
-### Types of HA Solutions
-- ***Active-Passive HA***
-> In an active-passive setup, one server actively handles requests while the other remains idle until it takes over in case of a failure.
-
-***Active-Active HA***
-> Active-active HA involves distributing workload between multiple active servers, increasing capacity and reducing single points of failure.
-
-***N+M Redundancy***
-> N+M redundancy involves having N active servers and M standby servers ready to take over in case of failures, providing a higher level of availability.
-
----
-## Split Brain Scenario
-
-The Split Brain Scenario refers to a situation in distributed systems where two or more nodes believe they are the sole coordinator or master of the system, leading to potential data inconsistencies and conflicts. This can occur in high-availability (HA) clusters, particularly when using shared storage technologies like SAN, iSCSI, or FCoE, where network partitions may cause nodes to lose communication with each other.
-
-### Key Characteristics
-
-- **Isolation of Nodes**: In a Split Brain Scenario, nodes become isolated from each other, often due to network failures or misconfigurations, leading to a state where each node believes it is the only active node.
-- **Data Inconsistency**: Without proper coordination or fencing mechanisms, these isolated nodes may continue to accept write operations independently, resulting in duplicate entries or lost updates, compromising data integrity.
-- **Risk of Data Loss or Corruption**: Over time, this can lead to significant data loss or corruption, as the system's state diverges between the nodes.
-
-### Mitigation Strategies
-
-- **Fencing Mechanisms**: Implementing fencing mechanisms, such as STONITH (Shoot The Other Node In The Head) or SBD (STONITH Block Device), to physically isolate malfunctioning nodes from the shared storage, preventing them from accepting write operations.
-- **Quorum Algorithms**: Utilizing quorum algorithms to determine the majority state of the cluster, ensuring that only the majority of nodes agree on the current state, thereby preventing conflicting operations.
-- **Watchdog Timers**: Employing watchdog timers on each node to detect and remove nodes that fail to respond, ensuring that only responsive nodes participate in the cluster operation.
-
-### Importance in High-Availability Systems
-
-In high-availability systems, mitigating the Split Brain Scenario is crucial for maintaining data integrity and system stability. Proper configuration of fencing mechanisms, along with vigilant monitoring and timely intervention, are essential to prevent this scenario from occurring and to quickly recover from it if it does.
-
----
-
 ## Distributed Storage 
 
 Distributed storage systems spread data across multiple nodes in a cluster to enhance scalability, reliability, and fault tolerance. This document focuses on Distributed Block Storage, where data is stored in blocks and managed independently.
@@ -167,16 +170,17 @@ Object storage is designed for storing unstructured data, such as images, videos
 File storage systems manage data as files within a hierarchical namespace. They are optimized for file-based access patterns but can also support block-level access through protocols like NFS or SMB.
 
 ***Block Storage***
-
-Block storage divides data into fixed-size blocks, which are managed independently. Each block can be stored on a separate physical drive, allowing for flexible scaling and high performance.
-
-***Distributed Block Storage*** 
-
 (next section)
 
 ---
 
-## Distributed Block Storage
+
+***Distributed Block Storage*** 
+
+Block storage divides data into fixed-size blocks, which are managed independently. Each block can be stored on a separate physical drive, allowing for flexible scaling and high performance.
+
+
+
 #### Examples
 - ***DRBD  (Distributed Replicated Block Device)***: Mirrors blockstorage so multiple nodes can use it safely (slow).
 - **Ceph**: A highly scalable, open-source software-defined storage platform that supports object, block, and file storage modes.
