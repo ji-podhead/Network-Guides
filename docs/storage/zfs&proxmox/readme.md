@@ -14,16 +14,13 @@
 
 ---
 
-## Storage
+## create proxmox ZFS tank
 
- | [Knowledge Base](https://ji-podhead.github.io/Network-Guides/storage/Knowledge%20Base)| [ZFS & Proxmox](https://ji-podhead.github.io/Network-Guides/storage/zfs&proxmox) | [ISCSI & Proxmox & SCST](https://ji-podhead.github.io/Network-Guides/storage/iscsi) |
- 
 ***nice yt-video that explains the zfs tank:***
 
 [![Thumbnail des Videos](https://img.youtube.com/vi/oSD-VoloQag/0.jpg)](https://www.youtube.com/watch?v=oSD-VoloQag&t=651s)
 
 
-## proxmox ZFS tank
 
 
 ***add the disk’s that we need for the tank to our wm***
