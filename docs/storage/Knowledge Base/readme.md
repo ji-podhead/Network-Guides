@@ -65,12 +65,12 @@ Both SAN and NAS are methods of storing data in a network environment, but they 
                      It allows multiple users and heterogeneous client devices to retrieve data from centralized disk capacity.</td>
                 </tr>
                 <tr>
-                    <td ><strong>Use Cases</strong></td>
-                    <td >NAS is suitable for file sharing, collaboration, and backup purposes, where file-level access is preferred over block-level access.</td>
+                    <td><strong>Use Cases</strong></td>
+                    <td>NAS is suitable for file sharing, collaboration, and backup purposes, where file-level access is preferred over block-level access.</td>
                 </tr>
                 <tr>
-                    <td ><strong>Architecture</strong></td>
-                    <td >NAS devices connect to the network using TCP/IP networking protocols and offer file-level access to the networked computers.</td>
+                    <td><strong>Architecture</strong></td>
+                    <td>NAS devices connect to the network using TCP/IP networking protocols and offer file-level access to the networked computers.</td>
                 </tr>
             </table>
         </td>
@@ -82,9 +82,10 @@ Both SAN and NAS are methods of storing data in a network environment, but they 
                     <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Comparison</th>
                 </tr>
                 <tr>
-                    <td ></td><strong>Access Level</strong></td>
-                    <td>SAN offers block-level access, making it faster for certain types of applications, while NAS provides file-level access,<br>
-                     which is more suited for general-purpose file sharing.</td>
+                    <td><strong>Access Level</strong></td>
+                    <td>SAN offers block-level access, making it faster for certain types of applications, <br> 
+                     while NAS provides file-level access, which is more suited for general-purpose file sharing.
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Protocol</strong></td>
@@ -92,7 +93,7 @@ Both SAN and NAS are methods of storing data in a network environment, but they 
                 </tr>
                 <tr>
                     <td><strong>Purpose</strong></td>
-                    <td"2">SAN is focused on high-performance storage for critical applications, while NAS is designed for efficient file sharing and collaboration.</td>
+                    <td>SAN is focused on high-performance storage for critical applications, while NAS is designed for efficient file sharing and collaboration.</td>
                 </tr>
                 <tr>
                     <td><strong>Cost</strong></td>
