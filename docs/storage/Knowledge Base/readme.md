@@ -52,26 +52,6 @@ High Availability (HA) refers to systems designed to continue operating without 
 ***N+M Redundancy***
 > N+M redundancy involves having N active servers and M standby servers ready to take over in case of failures, providing a higher level of availability.
 
----
-## Split Brain Scenario
-
-The Split Brain Scenario refers to a situation in distributed systems where two or more nodes believe they are the sole coordinator or master of the system, leading to potential data inconsistencies and conflicts. This can occur in high-availability (HA) clusters, particularly when using shared storage technologies like SAN, iSCSI, or FCoE, where network partitions may cause nodes to lose communication with each other.
-
-### Key Characteristics
-
-- **Isolation of Nodes**: In a Split Brain Scenario, nodes become isolated from each other, often due to network failures or misconfigurations, leading to a state where each node believes it is the only active node.
-- **Data Inconsistency**: Without proper coordination or fencing mechanisms, these isolated nodes may continue to accept write operations independently, resulting in duplicate entries or lost updates, compromising data integrity.
-- **Risk of Data Loss or Corruption**: Over time, this can lead to significant data loss or corruption, as the system's state diverges between the nodes.
-
-### Mitigation Strategies
-
-- **Fencing Mechanisms**: Implementing fencing mechanisms, such as STONITH (Shoot The Other Node In The Head) or SBD (STONITH Block Device), to physically isolate malfunctioning nodes from the shared storage, preventing them from accepting write operations.
-- **Quorum Algorithms**: Utilizing quorum algorithms to determine the majority state of the cluster, ensuring that only the majority of nodes agree on the current state, thereby preventing conflicting operations.
-- **Watchdog Timers**: Employing watchdog timers on each node to detect and remove nodes that fail to respond, ensuring that only responsive nodes participate in the cluster operation.
-
-### Importance in High-Availability Systems
-
-In high-availability systems, mitigating the Split Brain Scenario is crucial for maintaining data integrity and system stability. Proper configuration of fencing mechanisms, along with vigilant monitoring and timely intervention, are essential to prevent this scenario from occurring and to quickly recover from it if it does.
 
 ---
 ## SAN (Storage Area Network) vs NAS (Network Attached Storage)
@@ -162,48 +142,75 @@ Distributed storage systems spread data across multiple nodes in a cluster to en
 
 ### Types of Distributed Storage
 
-***Object Storage***
+**Object Storage**
 
 Object storage is designed for storing unstructured data, such as images, videos, and backups. Data is organized into objects, each with metadata, allowing for efficient retrieval and management.
 
-***File Storage***
+**File Storage**
 
 File storage systems manage data as files within a hierarchical namespace. They are optimized for file-based access patterns but can also support block-level access through protocols like NFS or SMB.
 
-***Block Storage***
-(next section)
-
----
-
-
-## Distributed Block Storage
-
-Block storage divides data into fixed-size blocks, which are managed independently. Each block can be stored on a separate physical drive, allowing for flexible scaling and high performance.
+***Distributed Block Storage***
+<div align="center">
+ <div style="display: flex; flex-direction: col; ">
+  <p>Block storage divides data into fixed-size blocks, which are managed independently. <br> Each block can be stored on a separate physical drive, allowing for flexible scaling and high performance.</p>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/DRBD_concept_overview.png" align="center" width="250" />
+ </div>
+</div>
 
 
+***examples***
+<table style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <td style="width: 50%; vertical-align: top;">
+            <table>
+             <tr>
+             <td style="background-color: #f0f0f0; text-align: center;">name</th>
+             <td style="background-color: #f0f0f0; text-align: center;">description</th>
+             </tr>     
+             <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>DRBD</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Mirrors blockstorage so multiple nodes can use it safely (slow).</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Ceph</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">A highly scalable, open-source software-defined storage platform. <br>
+                     Supports object, block, and file storage modes.
+                    </td>
+                  </tr>
+                   <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>GlusterFS</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">A scalable network filesystem that allows for the creation of large, distributed storage solutions..</td>
+                    </tr>
+                     <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>OpenEBS</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;"> Provides container-native block storage solutions for Kubernetes environments..</td>
+                </tr>
+                 <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Amazon S3</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;"> A widely-used object storage service that provides scalable storage for data objects..</td>
+                </tr>
+                 <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Google Cloud Storage</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Similar to Amazon S3, offering durable, secure, and scalable object storage..</td>
+                </tr>
+                 <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Hadoop HDFS</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;"> Designed for storing very large files across multiple machines, providing high aggregate bandwidth through data parallelism.
+</td>
+                </tr>
+            </table>
+    </tr>
+</table>
+</div>
 
-#### Examples
-- ***DRBD  (Distributed Replicated Block Device)***: Mirrors blockstorage so multiple nodes can use it safely (slow).
-- **Ceph**: A highly scalable, open-source software-defined storage platform that supports object, block, and file storage modes.
-- **GlusterFS**: A scalable network filesystem that allows for the creation of large, distributed storage solutions.
-- **OpenEBS**: Provides container-native block storage solutions for Kubernetes environments.
-- **Amazon S3**: A widely-used object storage service that provides scalable storage for data objects.
-- **Google Cloud Storage**: Similar to Amazon S3, offering durable, secure, and scalable object storage.
-- **Hadoop HDFS**: Designed for storing very large files across multiple machines, providing high aggregate bandwidth through data parallelism.
-
-[***image from wikipedia  describing DRBD functionality***](https://de.wikipedia.org/wiki/DRBD)
-
-![DRBD](https://upload.wikimedia.org/wikipedia/commons/5/5b/DRBD_concept_overview.png)
----
-
-## Comparison
-
+***comparison***
 | Type       | Use Case                                                                                   | Example                          |
 |------------|----------------------------------------------------------------------------------------------|----------------------------------|
-| Object     | Storing unstructured data, backups, and media content                                      | Amazon S3                        |
-| File       | Managing structured data in a hierarchical manner                                         | Network Attached Storage (NAS)   |
-| Block      | Providing raw block-level storage for databases, virtual machines, and containers           | SAN (Storage Area Network)        |
-| Distributed Block Storage | Scalable, high-performance storage for cloud-native applications and big data analytics | Ceph, GlusterFS, OpenEBS         |
+| ***Object***     | Storing unstructured data, backups, and media content                                      | Amazon S3                        |
+| ***File***       | Managing structured data in a hierarchical manner                                         | Network Attached Storage (NAS)   |
+| ***Block***      | Providing raw block-level storage for databases, virtual machines, and containers           | SAN (Storage Area Network)        |
+| ***Distributed Block Storage*** | Scalable, high-performance storage for cloud-native applications and big data analytics | Ceph, GlusterFS, OpenEBS         |
 
 ---
 
@@ -519,5 +526,26 @@ DRBD (Distributed Replicated Block Device) is a distributed storage system that 
 </table>
 </div>
 
+---
+## Split Brain Scenario
 
+The Split Brain Scenario refers to a situation in distributed systems where two or more nodes believe they are the sole coordinator or master of the system, leading to potential data inconsistencies and conflicts. This can occur in high-availability (HA) clusters, particularly when using shared storage technologies like SAN, iSCSI, or FCoE, where network partitions may cause nodes to lose communication with each other.
+
+### Key Characteristics
+
+- **Isolation of Nodes**: In a Split Brain Scenario, nodes become isolated from each other, often due to network failures or misconfigurations, leading to a state where each node believes it is the only active node.
+- **Data Inconsistency**: Without proper coordination or fencing mechanisms, these isolated nodes may continue to accept write operations independently, resulting in duplicate entries or lost updates, compromising data integrity.
+- **Risk of Data Loss or Corruption**: Over time, this can lead to significant data loss or corruption, as the system's state diverges between the nodes.
+
+### Mitigation Strategies
+
+- **Fencing Mechanisms**: Implementing fencing mechanisms, such as STONITH (Shoot The Other Node In The Head) or SBD (STONITH Block Device), to physically isolate malfunctioning nodes from the shared storage, preventing them from accepting write operations.
+- **Quorum Algorithms**: Utilizing quorum algorithms to determine the majority state of the cluster, ensuring that only the majority of nodes agree on the current state, thereby preventing conflicting operations.
+- **Watchdog Timers**: Employing watchdog timers on each node to detect and remove nodes that fail to respond, ensuring that only responsive nodes participate in the cluster operation.
+
+### Importance in High-Availability Systems
+
+In high-availability systems, mitigating the Split Brain Scenario is crucial for maintaining data integrity and system stability. Proper configuration of fencing mechanisms, along with vigilant monitoring and timely intervention, are essential to prevent this scenario from occurring and to quickly recover from it if it does.
+
+---
 
