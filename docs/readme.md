@@ -7,12 +7,7 @@
  | [main](https://ji-podhead.github.io/Network-Guides) | [DNS](https://ji-podhead.github.io/Network-Guides/DNS) |[DHCP](https://ji-podhead.github.io/Network-Guides/DHCP) |[Storage](https://ji-podhead.github.io/Network-Guides/storage) | [Repo](https://github.com/ji-podhead/Network-Guides/) |
  
 ---
-# Network-Guides
 
-
- | [Repo](https://github.com/ji-podhead/Network-Guides/) | [main](https://ji-podhead.github.io/Network-Guides/DNS) | [DNS](https://ji-podhead.github.io/Network-Guides/DNS) | 
-
----
 
 ***In this series i will cover different network topics like DNS, DHCP, SSL (certmanager + letsencrypt).*** 
 - The content derives from my personal research, studies and work.
