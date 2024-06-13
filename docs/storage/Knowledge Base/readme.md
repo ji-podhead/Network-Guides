@@ -161,6 +161,7 @@ File storage systems manage data as files within a hierarchical namespace. They 
 
 
 ***examples***
+
 <div style="max-width: 800px; margin: auto;">
     <table style="border-collapse: collapse; width: 100%;">
         <tr>
@@ -288,7 +289,6 @@ NFS (Network File System) is a distributed file system protocol that allows a sy
 <div style="max-width: 800px; margin: auto;">
     <h2>NFS (Network File System)</h2>
     <p>NFS (Network File System) is a distributed file system protocol that allows a system to share directories and files with others over a network. It enables users to access files on remote systems as if they were local.</p>
-    
     <table style="border-collapse: collapse; width: 100%;">
         <tr>
             <td style="width: 50%; vertical-align: top;">
@@ -379,6 +379,7 @@ iSCSI (Internet Small Computer System Interface) is a protocol that allows for t
 ## ZFS 
 
 ZFS (Zettabyte File System) is a combined file system and logical volume manager designed by Sun Microsystems. It stands out for its advanced features such as snapshotting, replication, automatic repair, and data compression.
+
 <div>
 <table style="border-collapse: collapse; width: 100%;">
     <tr>
