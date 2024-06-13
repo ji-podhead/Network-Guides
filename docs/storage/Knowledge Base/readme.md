@@ -19,7 +19,8 @@ Replication in computing involves sharing information to ensure consistency betw
 
 ---
 ## Race Conditions and Locking
-
+- this is not really network related but we are facing similar issues in networking!
+  
 Race conditions occur when two or more threads access shared data concurrently, and the outcome of the execution depends on the particular order in which the access takes place.<br> To prevent race conditions, ***synchronization mechanisms*** such as ***locks (also known as mutexes)*** are used.<br>
 When a thread wants to execute code within a critical section, it must first acquire the lock associated with that section. If the lock is already held by another thread, the requesting thread will block until the lock becomes available.
 
@@ -175,7 +176,7 @@ File storage systems manage data as files within a hierarchical namespace. They 
 ---
 
 
-***Distributed Block Storage*** 
+## Distributed Block Storage
 
 Block storage divides data into fixed-size blocks, which are managed independently. Each block can be stored on a separate physical drive, allowing for flexible scaling and high performance.
 
