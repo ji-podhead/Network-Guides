@@ -114,21 +114,14 @@ File storage systems manage data as files within a hierarchical namespace. They 
 
 ***Distributed Block Storage***
 
-<div align="center">
- <div style="display: flex; flex-direction: col; ">
-  <p>Block storage divides data into fixed-size blocks, which are managed independently. <br> Each block can be stored on a separate physical drive, allowing for flexible scaling and high performance.</p>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/DRBD_concept_overview.png" align="center" width="250" />
- </div>
-</div>
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/DRBD_concept_overview.png" align="center" width="250" />
 
+ > Block storage divides data into fixed-size blocks, which are managed independently. <br> Each block can be stored on a separate physical drive, allowing for flexible scaling and high performance.
 
-
+- **Examples**
 
 <div style="max-width: 800px; margin: auto;">
     <table style="border-collapse: collapse; width: 100%;">
-        <tr>
-            <td colspan="3" style="vertical-align: top;"><strong>Examples</strong></td>
-        </tr>
         <tr>
             <td colspan="1" style="background-color: #f0f0f0; text-align: center;">Name</td>
             <td colspan="2" style="background-color: #f0f0f0; text-align: center;">Description</td>
@@ -162,9 +155,15 @@ File storage systems manage data as files within a hierarchical namespace. They 
             <td colspan="1" style="padding: 8px; border: 1px solid #ddd;"><strong>Hadoop HDFS</strong></td>
             <td colspan="2" style="padding: 8px; border: 1px solid #ddd;">Designed for storing very large files across multiple machines, providing high aggregate bandwidth through data parallelism.</td>
         </tr>
-        <tr>
-            <td colspan="3"><strong>Comparison</strong></td>
-        </tr>
+     </table>
+</div>
+
+---
+### Distributed FS comparison
+
+<div style="max-width: 800px; margin: auto;">
+    <table style="border-collapse: collapse; width: 100%;">
+       </tr>
         <tr>
             <td><strong>Type</strong></td>
             <td><strong>UseCase</strong></td>
@@ -192,9 +191,6 @@ File storage systems manage data as files within a hierarchical namespace. They 
         </tr>
     </table>
 </div>
-
-
-
 
 ---
 
