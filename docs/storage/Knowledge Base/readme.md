@@ -250,9 +250,7 @@ Understanding these distinctions helps in selecting the appropriate technology f
 NFS (Network File System) is a distributed file system protocol that allows a system to share directories and files with others over a network. It enables users to access files on remote systems as if they were local.
 
 <div style="max-width: 800px; margin: auto;">
-    <h2>NFS (Network File System)</h2>
-    <p>NFS (Network File System) is a distributed file system protocol that allows a system to share directories and files with others over a network. It enables users to access files on remote systems as if they were local.</p>
-    <table style="border-collapse: collapse; width: 100%;">
+      <table style="border-collapse: collapse; width: 100%;">
         <tr>
             <td style="width: 50%; vertical-align: top;">
                 <table>
