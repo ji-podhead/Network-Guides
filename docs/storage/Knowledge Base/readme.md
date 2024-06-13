@@ -174,9 +174,11 @@ File storage systems manage data as files within a hierarchical namespace. They 
         </tr>
      </table>
 </div>
+---
 
 > ---
 > ### Distributed Storage comparison
+> 
 > <div style="max-width: 800px; margin: auto;">
 >    <table style="border-collapse: collapse; width: 100%;">
 >     <tr>
