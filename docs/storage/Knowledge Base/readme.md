@@ -178,37 +178,38 @@ File storage systems manage data as files within a hierarchical namespace. They 
 
 ---
 
+>### Distributed Storage comparison
+><div style="max-width: 800px; margin: auto;">
+>    <table style="border-collapse: collapse; width: 100%;">
+>       </tr>
+>        <tr>
+>            <td><strong>Type</strong></td>
+>            <td><strong>UseCase</strong></td>
+>            <td><strong>Example</strong></td>
+>        </tr>
+>        <tr>
+>            <td>Object</td>
+>            <td>Storing unstructured data, backups, and media content</td>
+>            <td>Amazon S3</td>
+>        </tr>
+>        <tr>
+>            <td>File</td>
+>            <td>Managing structured data in a hierarchical manner</td>
+>            <td>Network Attached Storage (NAS)</td>
+>        </tr>
+>        <tr>
+>            <td>Block</td>
+>            <td>Providing raw block-level storage for databases, virtual machines, and containers</td>
+>            <td>SAN (Storage Area Network)</td>
+>        </tr>
+>        <tr>
+>            <td>Distributed Block Storage*</td>
+>            <td>Scalable, high-performance storage for cloud-native applications and big data analytics</td>
+>            <td>Ceph, GlusterFS, OpenEBS</td>
+>        </tr>
+>    </table>
+></div>
 
-> ### Distributed Storage comparison
-> <div style="max-width: 800px; margin: auto;">
->     <table style="border-collapse: collapse; width: 100%;">
->      <tr>
->             <td><strong>Type</strong></td>
->             <td><strong>UseCase</strong></td>
->             <td><strong>Example</strong></td>
->         </tr>
->         <tr>
->             <td>Object</td>
->             <td>Storing unstructured data, backups, and media content</td>
->             <td>Amazon S3</td>
->         </tr>
->         <tr>
->             <td>File</td>
->             <td>Managing structured data in a hierarchical manner</td>
->             <td>Network Attached Storage (NAS)</td>
->         </tr>
->         <tr>
->             <td>Block</td>
->             <td>Providing raw block-level storage for databases, virtual machines, and containers</td>
->             <td>SAN (Storage Area Network)</td>
->         </tr>
->         <tr>
->             <td>Distributed Block Storage*</td>
->             <td>Scalable, high-performance storage for cloud-native applications and big data analytics</td>
->             <td>Ceph, GlusterFS, OpenEBS</td>
->         </tr>
->     </table>
-> </div>
 
 
 ---
