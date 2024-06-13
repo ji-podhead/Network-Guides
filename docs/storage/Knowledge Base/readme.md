@@ -7,7 +7,10 @@
 
 # Storage
 
+
  | [Knowledge Base](https://ji-podhead.github.io/Network-Guides/storage/Knowledge%20Base)| [ZFS & Proxmox](https://ji-podhead.github.io/Network-Guides/storage/zfs&proxmox) | [ISCSI & Proxmox & SCST](https://ji-podhead.github.io/Network-Guides/storage/iscsi) |
+
+# Knowledge Base
  
 ## Replication in Computing
 
@@ -46,14 +49,9 @@ High Availability (HA) refers to systems designed to continue operating without 
 
 ### Types of HA Solutions
 
-***Active-Passive HA***
-> In an active-passive setup, one server actively handles requests while the other remains idle until it takes over in case of a failure.
-
-***Active-Active HA***
-> Active-active HA involves distributing workload between multiple active servers, increasing capacity and reducing single points of failure.
-
-***N+M Redundancy***
-> N+M redundancy involves having N active servers and M standby servers ready to take over in case of failures, providing a higher level of availability.
+| ***Active-Passive HA*** | ***Active-Active HA*** | ***N+M Redundancy*** |
+|-------------------------|------------------------|----------------------|
+| In an active-passive setup, one server actively handles requests while the other remains idle until it takes over in case of a failure. |  Active-active HA involves distributing workload between multiple active servers, increasing capacity and reducing single points of failure. | N+M redundancy involves having N active servers and M standby servers ready to take over in case of failures, providing a higher level of availability. |
 
 
 ---
