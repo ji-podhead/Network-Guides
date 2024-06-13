@@ -179,7 +179,7 @@ File storage systems manage data as files within a hierarchical namespace. They 
 >### Distributed Storage comparison
 ><div style="max-width: 800px; margin: auto;">
 >    <table style="border-collapse: collapse; width: 100%;">
->        <tr>
+>     <tr>
 >            <td><strong>Type</strong></td>
 >            <td><strong>UseCase</strong></td>
 >            <td><strong>Example</strong></td>
