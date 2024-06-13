@@ -31,11 +31,11 @@
 ----
 
 ## Storage
-- ***Knowledge Base**
+- [***1. Knowledge Base***](https://ji-podhead.github.io/Network-Guides/storage/Knowledge%20Base/)
 > - everything you need to knwo from sas&nas to ceph
-- [***1. ZFS Pool in Proxmox***](https://ji-podhead.github.io/Network-Guides/storage/zfs&proxmox/)
+- [***2. ZFS Pool in Proxmox***](https://ji-podhead.github.io/Network-Guides/storage/zfs&proxmox/)
 > how to create a zfs ppol in promox and mount it via nfs  
-- [***2. ISCSI synced with Proxmox using SCST-project***](https://ji-podhead.github.io/Network-Guides/storage/iscsi/)
+- [***3. ISCSI synced with Proxmox using SCST-project***](https://ji-podhead.github.io/Network-Guides/storage/iscsi/)
 > - we install SCST-Project and sync it with proxmox
 ---
 
