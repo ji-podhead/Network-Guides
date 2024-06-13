@@ -5,8 +5,6 @@
 
 ---
 
- | [Knowledge Base](https://ji-podhead.github.io/Network-Guides/DNS/Knowledge%20Base)| [Install](https://ji-podhead.github.io/Network-Guides/DNS/install) | [Test&Debug](https://ji-podhead.github.io/Network-Guides/DNS/testAndDebug) | [Dynamic Updates & RNDC](https://ji-podhead.github.io/Network-Guides/DNS/Dynmaic_Updates_%26_RNDC) | [Attack Vectors & Scenario](https://ji-podhead.github.io/Network-Guides/DNS/attackVectorsAndScenario) | [Protection](https://ji-podhead.github.io/Network-Guides/DNS/protection) | 
- 
 ***In this series i will cover different network topics like DNS, DHCP, SSL (certmanager + letsencrypt).*** 
 - The content derives from my personal research, studies and work.
 - this will also be available on medium as blog-posts.
@@ -33,10 +31,12 @@
 ----
 
 ## Storage
-
-***1. ZFS Pool in Proxmox***
-***2. ISCSI synced with Proxmox using SCST-project***
-
+- ***Knowledge Base**
+> - everything you need to knwo from sas&nas to ceph
+- ***[1. ZFS Pool in Proxmox***](https://ji-podhead.github.io/Network-Guides/storage/zfs&proxmox/)
+> how to create a zfs ppol in promox and mount it via nfs  
+[***2. ISCSI synced with Proxmox using SCST-project***](https://ji-podhead.github.io/Network-Guides/storage/iscsi/)
+> - we install SCST-Project and sync it with proxmox
 ---
 
 > ***Roadmap***
