@@ -60,41 +60,58 @@ High Availability (HA) refers to systems designed to continue operating without 
 
 Both SAN and NAS are methods of storing data in a network environment, but they serve different purposes and are used in different scenarios.
 
-|  | ***SAN*** | ***NAS*** |
-|--|-----------|-----------|
-| ***Definition*** | A Storage Area Network (SAN) is a dedicated network that provides block-level data storage to servers so they appear as locally attached devices.<br> SANs are primarily used to enhance storage devices, such as disk arrays and tape libraries, accessible to servers | Network Attached Storage (NAS) is a dedicated file-level data storage device that operates on a computer network.<br> It allows multiple users and heterogeneous client devices to retrieve data from centralized disk capacity. |
-| ***Use Cases*** | SANs are ideal for applications requiring high-speed, low-latency access to storage, such as databases, email servers, and virtualization environments. | NAS is suitable for file sharing, collaboration, and backup purposes, where file-level access is preferred over block-level access |
-| ***Architecture*** |  SANs typically use Fibre Channel (FC) or Internet Small Computer System Interface (iSCSI) protocols for connectivity | NAS devices connect to the network using TCP/IP networking protocols and offer file-level access to the networked computers |
 
-<div style="max-width: 800px; margin: auto;">
-    <table style="border-collapse: collapse; width: 100%;">
-        <tr>
-            <td style="width: 50%; vertical-align: top;">
-                <table>
-                    <tr>
-                        <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Comparison</th>
-                    </tr>
-                    <tr>
-                        <td><strong>Access Level</strong></td>
-                        <td>SAN offers block-level access, making it faster for certain types of applications, while NAS provides file-level access, which is more suited for general-purpose file sharing.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Protocol</strong></td>
-                        <td>SAN commonly uses FC or iSCSI, whereas NAS uses NFS (for Unix/Linux) or SMB/CIFS (for Windows).</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Purpose</strong></td>
-                        <td>SAN is focused on high-performance storage for critical applications, while NAS is designed for efficient file sharing and collaboration.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Cost</strong></td>
-                        <td>SAN solutions can be more expensive due to the need for specialized hardware and cabling, whereas NAS devices are generally less costly and can leverage existing network infrastructure.</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+
+<table>
+    <tr>
+        <th></th>
+        <th><strong>SAN</strong></th>
+        <th><strong>NAS</strong></th>
+    </tr>
+    <tr>
+        <td><strong>Definition</strong></td>
+        <td>A Storage Area Network (SAN) is a dedicated network that provides block-level data storage to servers so they appear as locally attached devices.<br> SANs are primarily used to enhance storage devices, such as disk arrays and tape libraries, accessible to servers</td>
+        <td>A Network Attached Storage (NAS) is a dedicated file-level data storage device that operates on a computer network.<br> It allows multiple users and heterogeneous client devices to retrieve data from centralized disk capacity.</td>
+    </tr>
+    <tr>
+        <td><strong>Use Cases</strong></td>
+        <td>SANs are ideal for applications requiring high-speed, low-latency access to storage, such as databases, email servers, and virtualization environments.</td>
+        <td>NAS is suitable for file sharing, collaboration, and backup purposes, where file-level access is preferred over block-level access.</td>
+    </tr>
+    <tr>
+        <td><strong>Architecture</strong></td>
+        <td>SANs typically use Fibre Channel (FC) or Internet Small Computer System Interface (iSCSI) protocols for connectivity</td>
+        <td>NAS devices connect to the network using TCP/IP networking protocols and offer file-level access to the networked computers</td>
+    </tr>
+    <tr>
+        <td colspan="3"><strong>Comparison</strong></td>
+    </tr>
+    <tr>
+        <td><strong>Access Level</strong></td>
+        <td colspan="2">SAN offers block-level access, making it faster for certain types of applications, while NAS provides file-level access, which is more suited for general-purpose file sharing.</td>
+    </tr>
+    <tr>
+        <td><strong>Protocol</strong></td>
+        <td colspan="2">SAN commonly uses FC or iSCSI, whereas NAS uses NFS (for Unix/Linux) or SMB/CIFS (for Windows).</td>
+    </tr>
+    <tr>
+        <td><strong>Purpose</strong></td>
+        <td colspan="2">SAN is focused on high-performance storage for critical applications, while NAS is designed for efficient file sharing and collaboration.</td>
+    </tr>
+    <tr>
+        <td><strong>Cost</strong></td>
+        <td colspan="2">SAN solutions can be more expensive due to the need for specialized hardware and cabling, whereas NAS devices are generally less costly and can leverage existing network infrastructure.</td>
+    </tr>
+</table>
+
+</body>
+</html>
 
 
 ---
@@ -158,39 +175,38 @@ File storage systems manage data as files within a hierarchical namespace. They 
      </table>
 </div>
 
----
-### Distributed FS comparison
-
-<div style="max-width: 800px; margin: auto;">
-    <table style="border-collapse: collapse; width: 100%;">
-       </tr>
-        <tr>
-            <td><strong>Type</strong></td>
-            <td><strong>UseCase</strong></td>
-            <td><strong>Example</strong></td>
-        </tr>
-        <tr>
-            <td>Object</td>
-            <td>Storing unstructured data, backups, and media content</td>
-            <td>Amazon S3</td>
-        </tr>
-        <tr>
-            <td>File</td>
-            <td>Managing structured data in a hierarchical manner</td>
-            <td>Network Attached Storage (NAS)</td>
-        </tr>
-        <tr>
-            <td>Block</td>
-            <td>Providing raw block-level storage for databases, virtual machines, and containers</td>
-            <td>SAN (Storage Area Network)</td>
-        </tr>
-        <tr>
-            <td>Distributed Block Storage*</td>
-            <td>Scalable, high-performance storage for cloud-native applications and big data analytics</td>
-            <td>Ceph, GlusterFS, OpenEBS</td>
-        </tr>
-    </table>
-</div>
+>---
+>### Distributed Storage comparison
+><div style="max-width: 800px; margin: auto;">
+>    <table style="border-collapse: collapse; width: 100%;">
+>       </tr>
+>        <tr>
+>            <td><strong>Type</strong></td>
+>            <td><strong>UseCase</strong></td>
+>            <td><strong>Example</strong></td>
+>        </tr>
+>        <tr>
+>            <td>Object</td>
+>            <td>Storing unstructured data, backups, and media content</td>
+>            <td>Amazon S3</td>
+>        </tr>
+>        <tr>
+>            <td>File</td>
+>            <td>Managing structured data in a hierarchical manner</td>
+>            <td>Network Attached Storage (NAS)</td>
+>        </tr>
+>        <tr>
+>            <td>Block</td>
+>            <td>Providing raw block-level storage for databases, virtual machines, and containers</td>
+>            <td>SAN (Storage Area Network)</td>
+>        </tr>
+>        <tr>
+>            <td>Distributed Block Storage*</td>
+>            <td>Scalable, high-performance storage for cloud-native applications and big data analytics</td>
+>            <td>Ceph, GlusterFS, OpenEBS</td>
+>        </tr>
+>    </table>
+></div>
 
 ---
 
