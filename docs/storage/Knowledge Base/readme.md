@@ -25,6 +25,88 @@ Replication in computing involves sharing information to ensure consistency betw
 
 ---
 
+## SAN (Storage Area Network) vs NAS (Network Attached Storage)
+
+Both SAN and NAS are methods of storing data in a network environment, but they serve different purposes and are used in different scenarios.
+
+<div>
+<table style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <td style="width: 50%; vertical-align: top;">
+            <table>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">SAN (Storage Area Network)</th>
+                </tr>
+                <tr>
+                    <td><strong>Definition</strong></td>
+                    <td> A Storage Area Network (SAN) is a dedicated network that provides block-level data storage to servers so they appear as locally attached devices.<br>  SANs are primarily used to enhance storage devices, such as disk arrays and tape libraries, accessible to servers.</td>
+                </tr>
+                <tr>
+                    <td><strong>Use Cases</strong></td>
+                    <td>SANs are ideal for applications requiring high-speed, low-latency access to storage, such as databases, 
+                     <br> email servers, and virtualization environments.</td>
+                </tr>
+                <tr>
+                    <td><strong>Architecture</strong></td>
+                    <td>SANs typically use Fibre Channel (FC) or Internet Small Computer System Interface (iSCSI) protocols for connectivity.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 50%; vertical-align: top;">
+            <table>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">NAS (Network Attached Storage)</th>
+                </tr>
+                <tr>
+                    <td><strong>Definition</strong></td>
+                    <td>Network Attached Storage (NAS) is a dedicated file-level data storage device that operates on a computer network.<br>
+                     It allows multiple users and heterogeneous client devices to retrieve data from centralized disk capacity.</td>
+                </tr>
+                <tr>
+                    <td ><strong>Use Cases</strong></td>
+                    <td >NAS is suitable for file sharing, collaboration, and backup purposes, where file-level access is preferred over block-level access.</td>
+                </tr>
+                <tr>
+                    <td ><strong>Architecture</strong></td>
+                    <td >NAS devices connect to the network using TCP/IP networking protocols and offer file-level access to the networked computers.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 50%; vertical-align: top;">
+            <table>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Comparison</th>
+                </tr>
+                <tr>
+                    <td ></td><strong>Access Level</strong></td>
+                    <td>SAN offers block-level access, making it faster for certain types of applications, while NAS provides file-level access,<br>
+                     which is more suited for general-purpose file sharing.</td>
+                </tr>
+                <tr>
+                    <td><strong>Protocol</strong></td>
+                    <td>SAN commonly uses FC or iSCSI, whereas NAS uses NFS (for Unix/Linux) or SMB/CIFS (for Windows).</td>
+                </tr>
+                <tr>
+                    <td><strong>Purpose</strong></td>
+                    <td"2">SAN is focused on high-performance storage for critical applications, while NAS is designed for efficient file sharing and collaboration.</td>
+                </tr>
+                <tr>
+                    <td><strong>Cost</strong></td>
+                    <td>SAN solutions can be more expensive due to the need for specialized hardware and cabling, <br>
+                     whereas NAS devices are generally less costly and can leverage existing network infrastructure.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+
+---
+
 ## High Availability (HA) in Networking
 
 High Availability (HA) refers to systems designed to continue operating without interruption during the failure of one or more components. It ensures that critical services remain available and operational under various conditions, enhancing system reliability and minimizing downtime.
