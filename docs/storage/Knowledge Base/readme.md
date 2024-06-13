@@ -33,25 +33,17 @@ When a thread wants to execute code within a critical section, it must first acq
 |-----------|----------------|-----------------------|
 | A mutual exclusion object that prevents simultaneous access to a resource | A variable or abstract data type used to control access to a common resource by multiple processes in a concurrent system such as a multitasking operating system. | Allows concurrent read-only access but requires exclusive access for write operations. |
 
-
 ---
 
-## High Availability (HA) in Networking
+## can two computers boot from the same drive ?
+- well that depends, theoretically yes, but it doesnt come right of the box
+> *Yes, you can boot multiple systems from NFS (typically a read-only mount). No, there won't generally be conflicts, as long as that image doesn't have any host-unique configuration. For example, the root that you use should not have any configuration file with a fixed IP address in it, and each host should get address information from DHCP rather than from configuration files in the shared root.*
+>  - **posted by [gordonmessmer](https://www.reddit.com/user/gordonmessmer/) in this [reddit-thread](https://www.reddit.com/user/gordonmessmer/)**
 
-High Availability (HA) refers to systems designed to continue operating without interruption during the failure of one or more components. It ensures that critical services remain available and operational under various conditions, enhancing system reliability and minimizing downtime.
-
-### Components of HA Systems
-
-- **Redundant Hardware**: Duplicate components to ensure that if one fails, another can take over seamlessly.
-- **Load Balancing**: Distributes traffic across multiple servers to prevent overload and increase efficiency.
-- **Clustering**: Groups servers together so they can share workloads and resources, improving performance and resilience.
-- **Failover Mechanisms**: Automatically switch operations to a standby component when a primary component fails.
-
-### Types of HA Solutions
-
-| ***Active-Passive HA*** | ***Active-Active HA*** | ***N+M Redundancy*** |
-|-------------------------|------------------------|----------------------|
-| In an active-passive setup, one server actively handles requests while the other remains idle until it takes over in case of a failure. |  Active-active HA involves distributing workload between multiple active servers, increasing capacity and reducing single points of failure. | N+M redundancy involves having N active servers and M standby servers ready to take over in case of failures, providing a higher level of availability. |
+- the other option is to make us of replication
+  - this either requires some sort of locking algorithm, daemon or manager
+  - but we will learn more about this later
+    - *see distributed storage and cloud file system*
 
 
 ---
@@ -103,6 +95,152 @@ Both SAN and NAS are methods of storing data in a network environment, but they 
 </table>
 
 
+## NFS 
+
+NFS (Network File System) is a distributed file system protocol that allows a system to share directories and files with others over a network. It enables users to access files on remote systems as if they were local.
+
+<div style="max-width: 800px; margin: auto;">
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+            <td style="width: 50%; vertical-align: top;">
+                <table>
+                    <tr>
+                        <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
+                    </tr>
+                    <tr>
+                        <td><strong>File Sharing Protocol</strong></td>
+                        <td>NFS facilitates file sharing by allowing users to access files located on remote servers as if they were local to their own workstation.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cross-Platform Compatibility</strong></td>
+                        <td>NFS is cross-platform, supporting various operating systems, making it a versatile choice for mixed-environment networks.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance Optimization</strong></td>
+                        <td>NFS versions 4.x introduce improvements in performance and scalability, addressing limitations found in earlier versions.</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Operational Modes</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Client and Server Roles</strong></td>
+                        <td>In an NFS setup, one system acts as the server hosting the shared files, and other systems act as clients accessing those files.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Read-Only and Read-Write Access</strong></td>
+                        <td>NFS can configure shares to be read-only or read-write, depending on the permissions required for the shared files.</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+---
+
+
+
+
+## iSCSI 
+
+iSCSI (Internet Small Computer System Interface) is a protocol that allows for the transport of block-level data over IP networks. It enables the creation of storage area networks (SANs) by allowing remote servers to access storage as if it were locally attached.
+
+<div>
+<table style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <td style="width: 50%; vertical-align: top;">
+            <table>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
+                </tr>
+                <tr>
+                    <td><strong>Remote Storage Access</strong></td>
+                    <td>iSCSI allows for the presentation of remote storage devices to the operating system as if they were locally connected,<br>
+                     enabling direct access to storage over the network.</td>
+                </tr>
+                <tr>
+                    <td><strong>Compatibility with Existing Infrastructure</strong></td>
+                    <td>Since iSCSI operates over standard Ethernet connections, it can leverage existing network infrastructure, <br>
+                     reducing the need for specialized hardware.</td>
+                </tr>
+                <tr>
+                    <td><strong>Cost-Effective SAN Solutions</strong></td>
+                    <td>By using iSCSI, organizations can build SANs without the high cost associated with Fibre Channel technology, <br>
+                     making it an attractive option for budget-conscious deployments.</td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Operational Modes</th>
+                </tr>
+                <tr>
+                    <td><strong>Target and Initiator Roles</strong></td>
+                    <td>In an iSCSI setup, devices that provide storage are referred to as targets, while devices that request access to the storage are initiators. <br>
+                     Targets and initiators communicate over the network to facilitate data transfer.</td>
+                </tr>
+                <tr>
+                    <td><strong>Multipath Support</strong></td>
+                    <td>iSCSI supports multipathing, allowing data to be accessed through multiple paths for redundancy and increased reliability.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+
+---
+## ZFS 
+
+ZFS (Zettabyte File System) is a combined file system and logical volume manager designed by Sun Microsystems. It stands out for its advanced features such as snapshotting, replication, automatic repair, and data compression.
+
+<div>
+<table style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <td style="width: 50%; vertical-align: top;">
+            <table>
+                <tr>
+                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
+                </tr>
+                <tr>
+                    <td><strong>Integrated Data Protection</strong></td>
+                    <td>ZFS employs robust data protection mechanisms, including checksums for data integrity and RAID-Z for fault tolerance.</td>
+                </tr>
+                <tr>
+                    <td><strong>Snapshots and Clones</strong></td>
+                    <td>It supports instant snapshots of the file system, facilitating easy backups and version control.</td>
+                </tr>
+                <tr>
+                    <td><strong>Compression</strong></td>
+                    <td>ZFS integrates built-in compression algorithms to reduce storage space requirements.</td>
+                </tr>
+                <tr>
+                    <td><strong>RAID-Z</strong></td>
+                    <td>Offers a RAID level specifically designed for ZFS, providing data protection without parity overhead.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+
+
+---
+
+
+## High Availability (HA) in Networking
+
+High Availability (HA) refers to systems designed to continue operating without interruption during the failure of one or more components. It ensures that critical services remain available and operational under various conditions, enhancing system reliability and minimizing downtime.
+
+### Components of HA Systems
+
+- **Redundant Hardware**: Duplicate components to ensure that if one fails, another can take over seamlessly.
+- **Load Balancing**: Distributes traffic across multiple servers to prevent overload and increase efficiency.
+- **Clustering**: Groups servers together so they can share workloads and resources, improving performance and resilience.
+- **Failover Mechanisms**: Automatically switch operations to a standby component when a primary component fails.
+
+### Types of HA Solutions
+
+| ***Active-Passive HA*** | ***Active-Active HA*** | ***N+M Redundancy*** |
+|-------------------------|------------------------|----------------------|
+| In an active-passive setup, one server actively handles requests while the other remains idle until it takes over in case of a failure. |  Active-active HA involves distributing workload between multiple active servers, increasing capacity and reducing single points of failure. | N+M redundancy involves having N active servers and M standby servers ready to take over in case of failures, providing a higher level of availability. |
 
 
 ---
@@ -268,134 +406,6 @@ While distributed storage focuses on the architecture of storing data across mul
 - **Clustered File Systems** are about logical file system organization across multiple servers, facilitating shared access and collaboration.
 
 Understanding these distinctions helps in selecting the appropriate technology for specific use cases, whether it's the need for scalable storage or efficient data sharing across a cluster of servers.
-
----
-## NFS 
-
-NFS (Network File System) is a distributed file system protocol that allows a system to share directories and files with others over a network. It enables users to access files on remote systems as if they were local.
-
-<div style="max-width: 800px; margin: auto;">
-      <table style="border-collapse: collapse; width: 100%;">
-        <tr>
-            <td style="width: 50%; vertical-align: top;">
-                <table>
-                    <tr>
-                        <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
-                    </tr>
-                    <tr>
-                        <td><strong>File Sharing Protocol</strong></td>
-                        <td>NFS facilitates file sharing by allowing users to access files located on remote servers as if they were local to their own workstation.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Cross-Platform Compatibility</strong></td>
-                        <td>NFS is cross-platform, supporting various operating systems, making it a versatile choice for mixed-environment networks.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Performance Optimization</strong></td>
-                        <td>NFS versions 4.x introduce improvements in performance and scalability, addressing limitations found in earlier versions.</td>
-                    </tr>
-                    <tr>
-                        <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Operational Modes</th>
-                    </tr>
-                    <tr>
-                        <td><strong>Client and Server Roles</strong></td>
-                        <td>In an NFS setup, one system acts as the server hosting the shared files, and other systems act as clients accessing those files.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Read-Only and Read-Write Access</strong></td>
-                        <td>NFS can configure shares to be read-only or read-write, depending on the permissions required for the shared files.</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-</div>
-
----
-
-
-
-
-## iSCSI 
-
-iSCSI (Internet Small Computer System Interface) is a protocol that allows for the transport of block-level data over IP networks. It enables the creation of storage area networks (SANs) by allowing remote servers to access storage as if it were locally attached.
-
-<div>
-<table style="border-collapse: collapse; width: 100%;">
-    <tr>
-        <td style="width: 50%; vertical-align: top;">
-            <table>
-                <tr>
-                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
-                </tr>
-                <tr>
-                    <td><strong>Remote Storage Access</strong></td>
-                    <td>iSCSI allows for the presentation of remote storage devices to the operating system as if they were locally connected,<br>
-                     enabling direct access to storage over the network.</td>
-                </tr>
-                <tr>
-                    <td><strong>Compatibility with Existing Infrastructure</strong></td>
-                    <td>Since iSCSI operates over standard Ethernet connections, it can leverage existing network infrastructure, <br>
-                     reducing the need for specialized hardware.</td>
-                </tr>
-                <tr>
-                    <td><strong>Cost-Effective SAN Solutions</strong></td>
-                    <td>By using iSCSI, organizations can build SANs without the high cost associated with Fibre Channel technology, <br>
-                     making it an attractive option for budget-conscious deployments.</td>
-                </tr>
-                <tr>
-                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Operational Modes</th>
-                </tr>
-                <tr>
-                    <td><strong>Target and Initiator Roles</strong></td>
-                    <td>In an iSCSI setup, devices that provide storage are referred to as targets, while devices that request access to the storage are initiators. <br>
-                     Targets and initiators communicate over the network to facilitate data transfer.</td>
-                </tr>
-                <tr>
-                    <td><strong>Multipath Support</strong></td>
-                    <td>iSCSI supports multipathing, allowing data to be accessed through multiple paths for redundancy and increased reliability.</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-</div>
-
----
-## ZFS 
-
-ZFS (Zettabyte File System) is a combined file system and logical volume manager designed by Sun Microsystems. It stands out for its advanced features such as snapshotting, replication, automatic repair, and data compression.
-
-<div>
-<table style="border-collapse: collapse; width: 100%;">
-    <tr>
-        <td style="width: 50%; vertical-align: top;">
-            <table>
-                <tr>
-                    <th colspan="2" style="background-color: #f0f0f0; text-align: center;">Features</th>
-                </tr>
-                <tr>
-                    <td><strong>Integrated Data Protection</strong></td>
-                    <td>ZFS employs robust data protection mechanisms, including checksums for data integrity and RAID-Z for fault tolerance.</td>
-                </tr>
-                <tr>
-                    <td><strong>Snapshots and Clones</strong></td>
-                    <td>It supports instant snapshots of the file system, facilitating easy backups and version control.</td>
-                </tr>
-                <tr>
-                    <td><strong>Compression</strong></td>
-                    <td>ZFS integrates built-in compression algorithms to reduce storage space requirements.</td>
-                </tr>
-                <tr>
-                    <td><strong>RAID-Z</strong></td>
-                    <td>Offers a RAID level specifically designed for ZFS, providing data protection without parity overhead.</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-</div>
-
 
 ---
 
