@@ -1,7 +1,18 @@
 # Network-Guides
 
-
- | [main](https://ji-podhead.github.io/Network-Guides) | [DNS](https://ji-podhead.github.io/Network-Guides/DNS) | [DHCP](https://ji-podhead.github.io/Network-Guides/DHCP) | [Storage](https://ji-podhead.github.io/Network-Guides/storage) | [Security](https://github.com/ji-podhead/Network-Guides/Security)|  [Repo](https://github.com/ji-podhead/Network-Guides/) |
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+</head>
+<body>
+    <!-- Hier kommt Ihr iframe hin -->
+    <iframe src="navigation.html" width="200px" height="100%" style="border:none;"></iframe>
+    <!-- Der Rest Ihrer Seite geht hier -->
+</body>
+</html>
  
 ---
 
