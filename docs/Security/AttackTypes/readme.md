@@ -3,12 +3,14 @@
 ---
 
 # Web & Cloud Security
+ | [Attack Vectors](https://ji-podhead.github.io/Network-Guides/Security/Attack_Vectors)| [Attack Types](https://ji-podhead.github.io/Security/Attack_Types) |  [Tools](https://ji-podhead.github.io/Network-Guides/Security/Tools) |  [Analysis & Forensic](https://ji-podhead.github.io/Network-Guides/Security/Analysis) | 
+ 
 
- | [Attack Vectors](https://ji-podhead.github.io/Network-Guides/Security/Attack_Vectors)| [Attack Types](https://ji-podhead.github.io/Security/Attack_Types) |  [Measurements & Testing](https://ji-podhead.github.io/Network-Guides/Security/Testing) |  [Analysis & Forensic](https://ji-podhead.github.io/Network-Guides/Security/Analysis) | 
 
 ---
 
 ## Attack Types Descriptions and Tools
+
 ### Denial of Service (DoS) and Distributed Denial of Service (DDoS)
 **Description**: DoS and DDoS attacks aim to render a machine or network resource unavailable to its intended users by flooding the target or its surrounding infrastructure with excessive internet traffic. 
 **Types of DDoS Attacks**

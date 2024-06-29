@@ -6,10 +6,13 @@
 ---
 
 # Web & Cloud Security
- | [Attack Vectors](https://ji-podhead.github.io/Network-Guides/Security/Attack_Vectors)| [Attack Types](https://ji-podhead.github.io/Security/Attack_Types) |  [Measurements & Testing](https://ji-podhead.github.io/Network-Guides/Security/Testing) |  [Analysis & Forensic](https://ji-podhead.github.io/Network-Guides/Security/Analysis) | 
+ | [Attack Vectors](https://ji-podhead.github.io/Network-Guides/Security/Attack_Vectors)| [Attack Types](https://ji-podhead.github.io/Security/Attack_Types) |  [Tools](https://ji-podhead.github.io/Network-Guides/Security/Tools) |  [Analysis & Forensic](https://ji-podhead.github.io/Network-Guides/Security/Analysis) | 
+ 
+---
+
 
 ## Attack Vectors
-****
+
 ***Badly Configured Networks and Lack of Network Policies***: Poorly configured networks and the absence of robust network security policies leave systems vulnerable to various cyber threats. Without proper configuration, networks may expose unnecessary services, leaving them open to exploitation. Similarly, without clear security policies, there's a higher chance of misconfigurations and unsecured practices among users.
 ***Wiretapping***: Interception of communication traffic involves capturing and potentially analyzing private communications between parties. This can occur over various mediums like phone calls, emails, or internet traffic. Techniques used can range from simple eavesdropping to sophisticated man-in-the-middle attacks.
 ***IoT Devices, Printers and Other Devices***: Internet of Things (IoT) devices, printers, and other peripherals connected to a network can pose significant security risks if not properly secured. These devices often run on outdated firmware, lack strong authentication mechanisms, and may communicate over insecure channels, providing entry points for attackers.

@@ -4,9 +4,11 @@
 
 # Web & Cloud Security
  | [Attack Vectors](https://ji-podhead.github.io/Network-Guides/Security/Attack_Vectors)| [Attack Types](https://ji-podhead.github.io/Security/Attack_Types) |  [Tools](https://ji-podhead.github.io/Network-Guides/Security/Tools) |  [Analysis & Forensic](https://ji-podhead.github.io/Network-Guides/Security/Analysis) | 
+ 
+---
+
 ## Tools
 
----
 ### Automatic Testing
 The need for the following Methods can vary based on your Infrastructure.
 Automated testing can help you to discover potential risks, whether this depends on permissions, law-violation, or unsecure code and is therefore crucial to Appsec and DevOps.

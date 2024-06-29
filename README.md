@@ -1,14 +1,12 @@
 # Network-Guides
 
 
-
-
-
- | [main](https://ji-podhead.github.io/Network-Guides) | [DNS](https://ji-podhead.github.io/Network-Guides/DNS) |[DHCP](https://ji-podhead.github.io/Network-Guides/DHCP) |[Storage](https://ji-podhead.github.io/Network-Guides/storage) | [Repo](https://github.com/ji-podhead/Network-Guides/) |
+ | [main](https://ji-podhead.github.io/Network-Guides) | [DNS](https://ji-podhead.github.io/Network-Guides/DNS) | [DHCP](https://ji-podhead.github.io/Network-Guides/DHCP) | [Storage](https://ji-podhead.github.io/Network-Guides/storage) | [Security](https://github.com/ji-podhead/Network-Guides/Security)|  [Repo](https://github.com/ji-podhead/Network-Guides/) |
  
 ---
 
-***In this series i will cover different network topics like DNS, DHCP, SSL (certmanager + letsencrypt).*** 
+
+***In this series i will cover different network topics like DNS, DHCP, Web & Cloud Security, SSL (certmanager + letsencrypt).*** 
 - The content derives from my personal research, studies and work.
 - this will also be available on medium as blog-posts.
 
@@ -32,7 +30,12 @@
 > - how to setup our firewall
 
 ----
-
+## Web & Cloud Security
+- 1. [***Attack Vectors***](https://ji-podhead.github.io/Network-Guides/Security/AttackVectors)
+- 2 [***Attack Types***](https://ji-podhead.github.io/Network-Guides/Security/AttackTypes)
+- 3 [***Tools***](https://ji-podhead.github.io/Network-Guides/Security/Tools)
+	- Tools for Pentesting, Forensic and Protection
+---
 ## Storage
 - [***1. Knowledge Base***](https://ji-podhead.github.io/Network-Guides/storage/Knowledge%20Base/)
 > - everything you need to knwo from sas&nas to ceph
@@ -45,8 +48,6 @@
 > ***Roadmap***
 > - we learn how and why to prevent our personal data from snooping-attacks and datamining
 >   - this is the basis to setup cloud9 to avoid public DNS queries and therefore a huge attack-vector
-> - in the next step we configure our DNS in combination with our own private DHCP and subnets
 > -ssl using certmanager and letsencrypt
 > - authentication using rbac and oaut2
-> - ddos protection and proxy using cloudflare
 ---
