@@ -4,7 +4,7 @@
 
 
 
- | [main](https://ji-podhead.github.io/Network-Guides) | [DNS](https://ji-podhead.github.io/Network-Guides/DNS) | [DHCP](https://ji-podhead.github.io/Network-Guides/DHCP) | [Storage](https://ji-podhead.github.io/Network-Guides/storage) | [Security](https://github.com/ji-podhead/Network-Guides/Security)|  [Repo](https://github.com/ji-podhead/Network-Guides/) |
+ | [main](https://ji-podhead.github.io/Network-Guides) | [DNS](https://ji-podhead.github.io/Network-Guides/DNS) | [DHCP](https://ji-podhead.github.io/Network-Guides/DHCP) | [Storage](https://ji-podhead.github.io/Network-Guides/storage) [Repo](https://github.com/ji-podhead/Network-Guides/) |
  
 ---
 
