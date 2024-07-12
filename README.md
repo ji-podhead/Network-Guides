@@ -1,7 +1,7 @@
 # Network-Guides
 
 <div align="center">
-      <img src="https://github.com/ji-podhead/ji-podhead/blob/main/logo.jpg?raw=true" align="right" width="150" />
+      <img src="https://github.com/ji-podhead/ji-podhead/blob/main/logo.jpg?raw=true" align="right" width="50" />
 </div>
  
 ---
