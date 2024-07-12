@@ -1,23 +1,13 @@
 # Network-Guides
 
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <!-- Hier kommt Ihr iframe hin -->
-    <iframe src="navigation.html" width="200px" height="100%" style="border:none;"></iframe>
-    <!-- Der Rest Ihrer Seite geht hier -->
-</body>
-</html>
+<div align="center">
+      <img src="https://github.com/ji-podhead/ji-podhead/blob/main/logo.jpg?raw=true" align="right" width="150" />
+</div>
  
 ---
 
 
-***In this series i will cover different network topics like DNS, DHCP, Web & Cloud Security, SSL (certmanager + letsencrypt).*** 
+***In this series i will cover different network topics like DNS, DHCP, Web & Cloud Security and SSL.*** 
 - The content derives from my personal research, studies and work.
 - this will also be available on medium as blog-posts.
 
