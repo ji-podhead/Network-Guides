@@ -33,12 +33,7 @@
 > - how to setup our firewall
 
 ----
-## Web & Cloud Security
-- 1. [***Attack Vectors***](https://ji-podhead.github.io/Network-Guides/Security/AttackVectors)
-- 2 [***Attack Types***](https://ji-podhead.github.io/Network-Guides/Security/AttackTypes)
-- 3 [***Tools***](https://ji-podhead.github.io/Network-Guides/Security/Tools)
-	- Tools for Pentesting, Forensic and Protection
----
+
 ## Storage
 - [***1. Knowledge Base***](https://ji-podhead.github.io/Network-Guides/storage/Knowledge%20Base/)
 > - everything you need to knwo from sas&nas to ceph
